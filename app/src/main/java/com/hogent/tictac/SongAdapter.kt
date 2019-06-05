@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.hogent.tictac.common.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
 
 class SongAdapter(

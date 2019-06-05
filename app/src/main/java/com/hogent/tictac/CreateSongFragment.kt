@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import com.hogent.tictac.common.Model
+import com.hogent.tictac.common.Note
 import kotlinx.android.synthetic.main.fragment_create_song.*
 import kotlinx.android.synthetic.main.fragment_song_list.app_navigation
 
 
 class CreateSongFragment : Fragment() {
 
-    private lateinit var songService: SongService
+    private lateinit var songViewModel: SongViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +24,9 @@ class CreateSongFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_song, container, false)
 
-        songService = (activity as MainActivity).songService
+        songViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SongViewModel::class.java)
+        } ?: throw Exception("Invalid activity")
 
         return view
     }
@@ -40,9 +45,10 @@ class CreateSongFragment : Fragment() {
         app_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.song_create -> {
-                    songService.createSong(Model.Song(song_key.text.toString(), song_chord.text.toString()))
 
-                    (activity as MainActivity).navigateSongList()
+                    songViewModel.createSong(Model.Song(song_key.text.toString(), song_chord.text.toString()))
+                    songViewModel.onCreateSong(app_navigation.findViewById(R.id.song_create))
+
                     return@setOnNavigationItemSelectedListener true
                 }
                 else -> return@setOnNavigationItemSelectedListener false

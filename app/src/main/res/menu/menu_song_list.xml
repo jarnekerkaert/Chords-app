@@ -3,6 +3,6 @@
 
     <item
             android:id="@+id/song_new"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/baseline_add_black_24dp"
             android:title="NEW"/>
 </menu>

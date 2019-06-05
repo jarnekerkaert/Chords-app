@@ -1,4 +1,4 @@
-package com.hogent.tictac
+package com.hogent.tictac.common
 
 object Model {
     data class Song (

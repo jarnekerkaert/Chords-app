@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 class SongListFragment : Fragment() {
 
-    private lateinit var songService: SongService
+    private lateinit var songViewModel: SongViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,7 +20,9 @@ class SongListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_song_list, container, false)
 
-        songService = (activity as MainActivity).songService
+        songViewModel = activity?.run {
+            ViewModelProviders.of(this).get(SongViewModel::class.java)
+        } ?: throw Exception("Invalid activity")
 
         return view
     }
@@ -29,7 +32,7 @@ class SongListFragment : Fragment() {
 
         song_list.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = SongAdapter(songService.allSongs())
+            adapter = SongAdapter(songViewModel.allSongs())
         }
 
         app_navigation.setOnNavigationItemSelectedListener { item ->

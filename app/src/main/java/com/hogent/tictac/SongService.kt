@@ -1,10 +1,10 @@
 package com.hogent.tictac
 
+import com.hogent.tictac.common.Model
+
 class SongService {
 
-    private var songs: MutableList<Model.Song> = ArrayList<Model.Song>()
-
-
+    private var songs: MutableList<Model.Song> = ArrayList()
 
     init {
         songs.add(Model.Song("C","hey hye"))
