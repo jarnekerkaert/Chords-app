@@ -3,15 +3,18 @@ package com.hogent.tictac.view
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hogent.tictac.common.Model
-import com.hogent.tictac.common.Note
+import com.hogent.tictac.persistence.SongRepository
+import javax.inject.Inject
 
 class SongViewModel : ViewModel() {
     private var songs: MutableList<Model.Song> = ArrayList()
     var songCreating = MutableLiveData<Model.Song>()
 
+    @Inject
+    lateinit var songRepository: SongRepository
+
     init {
-        songs.add(Model.Song(Note.C, "Lays makes milk now", null))
-        songs.add(Model.Song(Note.C, "Chocolate is the new steak", null))
+        App.com
     }
 
     fun allSongs(): List<Model.Song> {

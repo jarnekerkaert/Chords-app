@@ -62,9 +62,8 @@ class CreateSongFragment : Fragment() {
                 songViewModel.songCreating.value = Model.Song(
                     Note.valueOf(song_key.text.toString().toUpperCase()),
                     song_chord.text.toString(),
-                    arrayListOf()
-//                    ,
-//                    UUID.randomUUID().variant()
+                    arrayListOf(),
+                    UUID.randomUUID().variant()
                 )
 
                 navController.navigate(R.id.action_createSongFragment_to_songChordsFragment)
