@@ -13,7 +13,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.hogent.tictac.common.Model
 import com.hogent.tictac.common.Note
+import com.hogent.tictac.view.SongViewModel
 import kotlinx.android.synthetic.main.fragment_create_song.*
+import java.util.*
 
 
 class CreateSongFragment : Fragment() {
@@ -61,6 +63,8 @@ class CreateSongFragment : Fragment() {
                     Note.valueOf(song_key.text.toString().toUpperCase()),
                     song_chord.text.toString(),
                     arrayListOf()
+//                    ,
+//                    UUID.randomUUID().variant()
                 )
 
                 navController.navigate(R.id.action_createSongFragment_to_songChordsFragment)

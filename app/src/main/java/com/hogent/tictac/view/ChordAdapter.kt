@@ -1,12 +1,12 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.hogent.tictac.R
+import com.hogent.tictac.SongChordsFragment
 
 class ChordAdapter(
     private val chords: List<String>,

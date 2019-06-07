@@ -1,4 +1,4 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

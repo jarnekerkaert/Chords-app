@@ -2,22 +2,18 @@ package com.hogent.tictac
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.textfield.TextInputLayout
 import com.hogent.tictac.common.Note
+import com.hogent.tictac.view.SongViewModel
+import com.hogent.tictac.view.ChordAdapter
 import kotlinx.android.synthetic.main.fragment_song_chords.*
 
 class SongChordsFragment : Fragment() {
