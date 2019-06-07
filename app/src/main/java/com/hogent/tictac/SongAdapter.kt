@@ -23,7 +23,7 @@ class SongAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = songs[position]
-        holder.songKey.text = item.key
+        holder.songKey.text = item.key.name
         holder.songTitle.text = item.title
 
         with(holder.parentLayout) {

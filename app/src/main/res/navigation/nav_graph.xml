@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/songListFragment">
+
+    <fragment
+            android:id="@+id/songListFragment"
+            android:name="com.hogent.tictac.SongListFragment"
+            android:label="SongListFragment">
+        <action
+                android:id="@+id/action_songListFragment_to_createSongFragment"
+                app:destination="@id/createSongFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+            android:id="@+id/createSongFragment"
+            android:name="com.hogent.tictac.CreateSongFragment"
+            android:label="CreateSongFragment">
+        <action android:id="@+id/action_createSongFragment_to_songChordsFragment"
+                app:destination="@id/songChordsFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popUpTo="@id/songListFragment"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment android:id="@+id/songChordsFragment"
+              android:name="com.hogent.tictac.SongChordsFragment"
+              android:label="SongChordsFragment">
+        <action android:id="@+id/action_songChordsFragment_to_songDetailFragment"
+                app:destination="@id/songDetailFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popUpTo="@id/songListFragment"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+    </fragment>
+    <fragment
+            android:id="@+id/songDetailFragment"
+            android:name="com.hogent.tictac.SongDetailFragment"
+            android:label="SongDetailFragment"/>
+</navigation>

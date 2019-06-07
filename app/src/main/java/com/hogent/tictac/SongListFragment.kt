@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 class SongListFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +28,13 @@ class SongListFragment : Fragment() {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
+        navController = this.findNavController()
+
+        val actionBar: ActionBar? = (activity as MainActivity).supportActionBar
+        actionBar?.title = "Song list"
+        actionBar?.setDisplayHomeAsUpEnabled(false)
+        actionBar?.setDisplayShowHomeEnabled(false)
+
         return view
     }
 
@@ -35,14 +46,8 @@ class SongListFragment : Fragment() {
             adapter = SongAdapter(songViewModel.allSongs())
         }
 
-        app_navigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.song_new -> {
-                    (activity as MainActivity).navigateCreateSong()
-                    return@setOnNavigationItemSelectedListener true
-                }
-                else -> return@setOnNavigationItemSelectedListener false
-            }
+        song_list_create.setOnClickListener {
+            navController.navigate(R.id.action_songListFragment_to_createSongFragment)
         }
     }
 }

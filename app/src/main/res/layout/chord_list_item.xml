@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+    <TextView
+            android:id="@+id/chord"
+            android:layout_width="@dimen/chord_size"
+            android:layout_height="@dimen/chord_size"
+            android:padding="5dp"
+            android:textSize="45sp"
+            android:textColor="#fff"
+            android:background="@color/colorAccent"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"/>
+
+</com.google.android.material.card.MaterialCardView>

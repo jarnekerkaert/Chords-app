@@ -1,70 +1,45 @@
 package com.hogent.tictac
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.hogent.tictac.common.Note
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmentInteractionListener {
 
-    private lateinit var songListFragment: SongListFragment
-    private lateinit var createSongFragment: CreateSongFragment
-    private lateinit var songDetailFragment: SongDetailFragment
     private lateinit var songViewModel: SongViewModel
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         songViewModel = ViewModelProviders.of(this).get(SongViewModel::class.java)
-        songViewModel.createSongEvent.observe(this, Observer { navigateSongDetail() })
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(app_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-//        app_back.setOnClickListener {
-//            onBackPressed()
-//        }
+        navController = findNavController(R.id.nav_host_fragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        navigateSongList()
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSongChordsFragmentInteraction(chord: String) {
+        songViewModel.songCreating.value?.chords?.add(Note.valueOf(chord))
+        Toast.makeText(this, "Added $chord to song", Toast.LENGTH_SHORT).show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 1)
-            supportFragmentManager.popBackStack()
-    }
-
-    fun navigateSongList() {
-        songListFragment = SongListFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.app_main_container, songListFragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    fun navigateCreateSong() {
-        createSongFragment = CreateSongFragment()
-        supportFragmentManager.beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.app_main_container, createSongFragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    fun navigateSongDetail() {
-        songDetailFragment = SongDetailFragment()
-        supportFragmentManager.beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .replace(R.id.app_main_container, songDetailFragment)
-            .addToBackStack(null)
-            .commit()
+        return navController.navigateUp()
     }
 }

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/song_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/app_navigation"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/app_navigation"
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/song_list_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/menu_song_list"/>
-</RelativeLayout>
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="NEW"/>
+
+
+</LinearLayout>

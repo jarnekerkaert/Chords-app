@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.hogent.tictac.common.Model
 import com.hogent.tictac.common.Note
 import kotlinx.android.synthetic.main.fragment_create_song.*
-import kotlinx.android.synthetic.main.fragment_song_list.app_navigation
 
 
 class CreateSongFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
+    private lateinit var navController: NavController
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +33,13 @@ class CreateSongFragment : Fragment() {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
+        navController = this.findNavController()
+
+        val actionBar: ActionBar? = (activity as MainActivity).supportActionBar
+        actionBar?.title = "Create song"
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayShowHomeEnabled(true)
+
         return view
     }
 
@@ -39,20 +51,19 @@ class CreateSongFragment : Fragment() {
             Note.values()
         )
 
-        val editTextFilledExposedDropdown = song_key
-        editTextFilledExposedDropdown.setAdapter(adapter)
+        song_key.setAdapter(adapter)
 
-        app_navigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.song_create -> {
+        song_create.setOnClickListener {
+            if (song_key.text.isEmpty())
+                Toast.makeText(context!!, "Select a key", Toast.LENGTH_SHORT).show()
+            else {
+                songViewModel.songCreating.value = Model.Song(
+                    Note.valueOf(song_key.text.toString().toUpperCase()),
+                    song_chord.text.toString(),
+                    arrayListOf()
+                )
 
-                    songViewModel.createSong(Model.Song(song_key.text.toString(), song_chord.text.toString()))
-                    songViewModel.onCreateSong(app_navigation.findViewById(R.id.song_create))
-
-                    return@setOnNavigationItemSelectedListener true
-                }
-                else -> return@setOnNavigationItemSelectedListener false
-
+                navController.navigate(R.id.action_createSongFragment_to_songChordsFragment)
             }
         }
     }

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
             android:id="@+id/song_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/app_navigation"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center"
             android:padding="10dp">
@@ -37,14 +37,16 @@
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/song_chord"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:hint="Title"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/app_navigation"
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/song_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/menu_create_song"/>
-</RelativeLayout>
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="CREATE"/>
+</LinearLayout>
