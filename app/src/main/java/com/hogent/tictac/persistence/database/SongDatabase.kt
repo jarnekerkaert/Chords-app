@@ -1,12 +1,13 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.hogent.tictac.common.Model
+import com.hogent.tictac.persistence.Converters
+import com.hogent.tictac.persistence.SongDao
 
 @Database(entities = [Model.Song::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class SongDatabase: RoomDatabase() {
 
     abstract fun songDao(): SongDao
