@@ -1,4 +1,4 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.database
 
 import dagger.Module
 

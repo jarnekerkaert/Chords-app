@@ -1,6 +1,7 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.database
 
 import android.app.Application
+import com.hogent.tictac.persistence.DaggerDatabaseComponent
 
 class App: Application() {
 
@@ -8,13 +9,10 @@ class App: Application() {
         lateinit var component: DatabaseComponent
     }
 
-
     override fun onCreate() {
         super.onCreate()
-        component = DaggerDatabaseComponent
-            .builder()
+        component = DaggerDatabaseComponent.builder()
             .databaseModule(DatabaseModule(this))
-            .networkModule(NetworkModule())
             .build()
     }
 }

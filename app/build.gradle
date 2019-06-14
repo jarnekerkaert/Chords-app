@@ -51,15 +51,17 @@ dependencies {
 
     // ROOM
     implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // DAGGER
     implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt 'com.google.dagger:dagger-compiler:2.15'
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt 'com.google.dagger:dagger-android-processor:2.15'
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // CONVERSION
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // TEST
     implementation 'androidx.recyclerview:recyclerview:1.0.0'

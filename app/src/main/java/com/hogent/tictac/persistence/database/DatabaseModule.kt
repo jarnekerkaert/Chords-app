@@ -1,7 +1,9 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.database
 
 import android.app.Application
 import android.content.Context
+import com.hogent.tictac.persistence.SongDao
+import com.hogent.tictac.persistence.SongRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,7 +13,7 @@ class DatabaseModule(private val application: Application) {
 
     @Provides
     @Singleton
-    internal fun provideSongRepository(userDao: SongDao):SongRepository {
+    internal fun provideSongRepository(userDao: SongDao): SongRepository {
         return SongRepository(userDao)
     }
 
