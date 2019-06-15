@@ -6,7 +6,7 @@ import com.hogent.tictac.common.Model
 import com.hogent.tictac.persistence.Converters
 import com.hogent.tictac.persistence.SongDao
 
-@Database(entities = [Model.Song::class], version = 1)
+@Database(entities = [Model.Song::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class SongDatabase: RoomDatabase() {
 
@@ -27,7 +27,7 @@ abstract class SongDatabase: RoomDatabase() {
                     context.applicationContext,
                     SongDatabase::class.java,
                     "Song_database"
-                ).build()
+                ).allowMainThreadQueries().build()
                 INSTANCE = instance
                 return instance
             }

@@ -63,7 +63,7 @@ class CreateSongFragment : Fragment() {
                     Note.valueOf(song_key.text.toString().toUpperCase()),
                     song_chord.text.toString(),
                     arrayListOf(),
-                    UUID.randomUUID().variant()
+                    null
                 )
 
                 navController.navigate(R.id.action_createSongFragment_to_songChordsFragment)
