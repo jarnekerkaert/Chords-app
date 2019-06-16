@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
     private lateinit var songViewModel: SongViewModel
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +39,11 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
     override fun onSongChordsFragmentInteraction(chord: String) {
         songViewModel.songCreating.value?.chords?.add(Note.valueOf(chord))
 
-        val mediaPlayer: MediaPlayer? = MediaPlayer.create(this, R.raw.)
-        mediaPlayer?.start()
+        val chordId = resources.getIdentifier(chord.toLowerCase(), "raw", packageName)
+        if(chordId != 0) {
+            mediaPlayer = MediaPlayer.create(this, chordId)
+            mediaPlayer.start()
+        }
 
         Toast.makeText(this, "Added $chord to song", Toast.LENGTH_SHORT).show()
     }
