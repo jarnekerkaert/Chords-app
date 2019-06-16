@@ -13,7 +13,7 @@ class SongViewModel : InjectedViewModel() {
     lateinit var songRepository: SongRepository
 
     fun allSongs(): List<Model.Song> {
-        return songRepository.songs.value!!
+        return songRepository.songs.value ?: arrayListOf()
     }
 
     fun saveSong() {

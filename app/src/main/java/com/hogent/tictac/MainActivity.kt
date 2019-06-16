@@ -1,5 +1,6 @@
 package com.hogent.tictac
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,10 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
 
     override fun onSongChordsFragmentInteraction(chord: String) {
         songViewModel.songCreating.value?.chords?.add(Note.valueOf(chord))
+
+        val mediaPlayer: MediaPlayer? = MediaPlayer.create(this, R.raw.)
+        mediaPlayer?.start()
+
         Toast.makeText(this, "Added $chord to song", Toast.LENGTH_SHORT).show()
     }
 

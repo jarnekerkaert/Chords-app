@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import com.hogent.tictac.common.Model
 
 class SongRepository(private val songDao: SongDao) {
-    val songs: LiveData<List<Model.Song>> = songDao.getAllSongs()
+    var songs: LiveData<List<Model.Song>> = songDao.getAllSongs()
 
     @WorkerThread
     fun insert(song: Model.Song) {

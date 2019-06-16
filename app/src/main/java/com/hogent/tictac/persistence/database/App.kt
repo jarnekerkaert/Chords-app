@@ -1,7 +1,6 @@
 package com.hogent.tictac.persistence.database
 
 import android.app.Application
-import com.hogent.tictac.persistence.DaggerDatabaseComponent
 
 class App: Application() {
 

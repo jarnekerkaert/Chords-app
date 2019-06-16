@@ -13,7 +13,7 @@ object Model {
         var key: Note,
         var title: String,
         @TypeConverters(Converters::class)
-        var chords: ArrayList<Note> = arrayListOf(),
-        @PrimaryKey(autoGenerate = true) val id: Int
+        var chords: MutableList<Note> = arrayListOf(),
+        @PrimaryKey(autoGenerate = true) var id: Long?
     )
 }
