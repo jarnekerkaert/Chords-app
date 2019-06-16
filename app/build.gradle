@@ -32,7 +32,7 @@ android {
 
 dependencies {
     // VERSION DEFINITIONS
-    def room_version = "2.1.0-rc01"
+    def room_version = "2.1.0"
     def dagger_version = "2.23.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -68,5 +68,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation files('D:\\JARNE\\Documents\\Informatica\\3e\\Native\\libraries\\tinysound-1.1.1.jar')
 }
