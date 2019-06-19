@@ -25,9 +25,9 @@ class CreateSongFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_song, container, false)
 
@@ -49,8 +49,8 @@ class CreateSongFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = ArrayAdapter(
-            context!!, R.layout.dropdown_menu_popup_item,
-            Note.values()
+                context!!, R.layout.dropdown_menu_popup_item,
+                Note.values()
         )
 
         song_key.setAdapter(adapter)
@@ -59,11 +59,11 @@ class CreateSongFragment : Fragment() {
             if (song_key.text.isEmpty())
                 Toast.makeText(context!!, "Select a key", Toast.LENGTH_SHORT).show()
             else {
-                songViewModel.songCreating.value = Model.Song(
-                    Note.valueOf(song_key.text.toString().toUpperCase()),
-                    song_chord.text.toString(),
-                    arrayListOf(),
-                    null
+                songViewModel.songSelected.value = Model.Song(
+                        Note.valueOf(song_key.text.toString().toUpperCase()),
+                        song_chord.text.toString(),
+                        arrayListOf(),
+                        UUID.randomUUID().toString()
                 )
 
                 navController.navigate(R.id.action_createSongFragment_to_songChordsFragment)

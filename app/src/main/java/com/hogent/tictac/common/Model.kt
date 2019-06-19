@@ -14,6 +14,6 @@ object Model {
         var title: String,
         @TypeConverters(Converters::class)
         var chords: MutableList<Note> = arrayListOf(),
-        @PrimaryKey(autoGenerate = true) var id: Long?
+        @PrimaryKey var id: String
     )
 }

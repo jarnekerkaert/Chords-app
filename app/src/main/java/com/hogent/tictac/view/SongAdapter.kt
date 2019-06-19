@@ -12,13 +12,14 @@ import com.hogent.tictac.common.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
 
 class SongAdapter(
-    private val songs: List<Model.Song>
+        private val songs: Array<Model.Song>,
+        private val listener: View.OnClickListener
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_song, parent, false)
+                .inflate(R.layout.fragment_song, parent, false)
         return ViewHolder(view)
     }
 
@@ -29,7 +30,7 @@ class SongAdapter(
 
         with(holder.parentLayout) {
             setOnClickListener {
-                Log.d("Clicked: ", item.title)
+                listener.onClick(holder.itemView)
             }
         }
     }

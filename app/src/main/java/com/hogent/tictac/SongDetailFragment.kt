@@ -15,6 +15,8 @@ import com.hogent.tictac.view.ChordAdapter
 import kotlinx.android.synthetic.main.fragment_song_chords.*
 import kotlinx.android.synthetic.main.fragment_song_chords.chord_list
 import kotlinx.android.synthetic.main.fragment_song_detail.*
+import java.lang.IllegalStateException
+import android.media.MediaPlayer.OnCompletionListener
 
 
 class SongDetailFragment : Fragment() {
@@ -24,9 +26,9 @@ class SongDetailFragment : Fragment() {
     private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_song_detail, container, false)
 
@@ -34,6 +36,7 @@ class SongDetailFragment : Fragment() {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
+        mediaPlayer = MediaPlayer()
         navController = this.findNavController()
 
         return view
@@ -45,21 +48,24 @@ class SongDetailFragment : Fragment() {
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ChordAdapter(
-                songViewModel.songCreating.value!!.chords.map { c -> c.name },
-                null
+                    songViewModel.songSelected.value!!.chords.map { c -> c.name },
+                    null
             )
         }
 
-        if(songViewModel.songCreating.value != null)
-        play_button.setOnClickListener {
-            for (chord in songViewModel.songCreating.value!!.chords) {
-                val chordId = resources.getIdentifier(chord.name.toLowerCase(), "raw", activity!!.packageName)
-                if(chordId != 0) {
-                    mediaPlayer = MediaPlayer.create(activity, chordId)
-                    mediaPlayer.start()
+        if (songViewModel.songSelected.value != null)
+            play_button.setOnClickListener {
+                for (chord in songViewModel.songSelected.value!!.chords) {
+                    val chordId = resources.getIdentifier(chord.name.toLowerCase(), "raw", activity!!.packageName)
+                    if (chordId != 0) {
+                        if(mediaPlayer.isPlaying)
+                            mediaPlayer.stop()
+                        mediaPlayer = MediaPlayer.create(activity, chordId)
+                        mediaPlayer.start()
+                        mediaPlayer.setOnCompletionListener { mp -> mp.release() }
+                    }
+                    Thread.sleep(1000)
                 }
-                Thread.sleep(1000)
             }
-        }
     }
 }

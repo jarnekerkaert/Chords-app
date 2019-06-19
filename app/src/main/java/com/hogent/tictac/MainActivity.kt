@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.hogent.tictac.common.Note
 import com.hogent.tictac.view.SongViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmentInteractionListener {
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
         super.onCreate(savedInstanceState)
 
         songViewModel = ViewModelProviders.of(this).get(SongViewModel::class.java)
+        mediaPlayer = MediaPlayer()
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(app_toolbar)
@@ -37,12 +39,15 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
     }
 
     override fun onSongChordsFragmentInteraction(chord: String) {
-        songViewModel.songCreating.value?.chords?.add(Note.valueOf(chord))
+        songViewModel.songSelected.value?.chords?.add(Note.valueOf(chord))
 
         val chordId = resources.getIdentifier(chord.toLowerCase(), "raw", packageName)
-        if(chordId != 0) {
+        if (chordId != 0) {
+            if(mediaPlayer.isPlaying)
+                mediaPlayer.stop()
             mediaPlayer = MediaPlayer.create(this, chordId)
             mediaPlayer.start()
+            mediaPlayer.setOnCompletionListener { mp -> mp.release() }
         }
 
         Toast.makeText(this, "Added $chord to song", Toast.LENGTH_SHORT).show()

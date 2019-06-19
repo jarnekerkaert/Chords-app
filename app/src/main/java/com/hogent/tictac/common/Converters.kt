@@ -15,10 +15,10 @@ class Converters {
 
     @TypeConverter
     fun daysOfWeekToString(chords: MutableList<Note>?): String? =
-        chords?.map { it.name }?.joinToString(separator = SEPARATOR)
+            chords?.map { it.name }?.joinToString(separator = SEPARATOR)
 
     @TypeConverter
     fun stringToDaysOfWeek(chords: String?): MutableList<Note>? =
-        chords?.split(SEPARATOR)?.map { Note.valueOf(it) }?.toMutableList()
+            chords?.split(SEPARATOR)?.map { Note.valueOf(it) }?.toMutableList()
 
 }

@@ -8,7 +8,7 @@ import com.hogent.tictac.persistence.SongDao
 
 @Database(entities = [Model.Song::class], version = 2)
 @TypeConverters(Converters::class)
-abstract class SongDatabase: RoomDatabase() {
+abstract class SongDatabase : RoomDatabase() {
 
     abstract fun songDao(): SongDao
 
@@ -18,15 +18,15 @@ abstract class SongDatabase: RoomDatabase() {
 
         fun getDatabase(context: Context): SongDatabase {
             val tempInstance = INSTANCE
-            if(tempInstance != null) {
+            if (tempInstance != null) {
                 return tempInstance
             }
 
             synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    SongDatabase::class.java,
-                    "Song_database"
+                        context.applicationContext,
+                        SongDatabase::class.java,
+                        "Song_database"
                 ).allowMainThreadQueries().build()
                 INSTANCE = instance
                 return instance

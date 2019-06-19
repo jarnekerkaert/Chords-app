@@ -9,8 +9,8 @@ import com.hogent.tictac.R
 import com.hogent.tictac.SongChordsFragment
 
 class ChordAdapter(
-    private val chords: List<String>,
-    private val mListener: SongChordsFragment.OnSongChordsFragmentInteractionListener?
+        private val chords: List<String>,
+        private val mListener: SongChordsFragment.OnSongChordsFragmentInteractionListener?
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener

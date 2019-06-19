@@ -1,9 +1,10 @@
-package com.hogent.tictac.persistence.database
+package com.hogent.tictac.persistence.module
 
 import android.app.Application
 import android.content.Context
 import com.hogent.tictac.persistence.SongDao
 import com.hogent.tictac.persistence.SongRepository
+import com.hogent.tictac.persistence.database.SongDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

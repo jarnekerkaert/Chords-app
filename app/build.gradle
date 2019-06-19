@@ -34,6 +34,8 @@ dependencies {
     // VERSION DEFINITIONS
     def room_version = "2.1.0"
     def dagger_version = "2.23.1"
+    def retrofit_version = "2.4.0"
+    def okhttp_version = "4.0.0-RC1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -59,6 +61,19 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // RETROFIT
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    //OKHTTP
+    implementation "com.squareup.okhttp3:okhttp:3.12.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.0"
+
+    // REACTIVE JAVA
+    implementation "io.reactivex.rxjava2:rxjava:2.2.4"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
 
     // CONVERSION
     implementation 'com.google.code.gson:gson:2.8.2'
