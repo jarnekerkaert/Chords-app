@@ -1,24 +1,25 @@
-package com.hogent.tictac.view
+package com.hogent.tictac.viewmodel
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.tictac.R
-import com.hogent.tictac.SongChordsFragment
+import com.hogent.tictac.view.SongChordsFragment
 
 class ChordAdapter(
         private val chords: List<String>,
-        private val mListener: SongChordsFragment.OnSongChordsFragmentInteractionListener?
+        private val mListener: OnChordClickListener
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
+    private val onClickListener: View.OnClickListener
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
+        onClickListener = View.OnClickListener { v ->
             val item = v.tag as String
-            mListener?.onSongChordsFragmentInteraction(item)
+            mListener.onChordClick(item)
         }
     }
 
@@ -34,7 +35,7 @@ class ChordAdapter(
 
         holder.chord.apply {
             tag = item
-            setOnClickListener(mOnClickListener)
+            setOnClickListener(onClickListener)
         }
     }
 
@@ -42,5 +43,9 @@ class ChordAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val chord: TextView = view.findViewById(R.id.chord)
+    }
+
+    interface OnChordClickListener {
+        fun onChordClick(item: String)
     }
 }

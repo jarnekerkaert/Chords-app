@@ -1,8 +1,7 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.hogent.tictac.persistence.database.App
-import com.hogent.tictac.view.SongViewModel
+import com.hogent.tictac.persistence.App
 
 abstract class InjectedViewModel : ViewModel() {
 

@@ -9,23 +9,21 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.hogent.tictac.common.Note
-import com.hogent.tictac.view.SongViewModel
+import com.hogent.tictac.persistence.Model
+import com.hogent.tictac.view.SongChordsFragment
+import com.hogent.tictac.viewmodel.SongViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.IllegalStateException
 
-class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmentInteractionListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var songViewModel: SongViewModel
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         songViewModel = ViewModelProviders.of(this).get(SongViewModel::class.java)
-        mediaPlayer = MediaPlayer()
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(app_toolbar)
@@ -36,21 +34,6 @@ class MainActivity : AppCompatActivity(), SongChordsFragment.OnSongChordsFragmen
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
-    }
-
-    override fun onSongChordsFragmentInteraction(chord: String) {
-        songViewModel.songSelected.value?.chords?.add(Note.valueOf(chord))
-
-        val chordId = resources.getIdentifier(chord.toLowerCase(), "raw", packageName)
-        if (chordId != 0) {
-            if(mediaPlayer.isPlaying)
-                mediaPlayer.stop()
-            mediaPlayer = MediaPlayer.create(this, chordId)
-            mediaPlayer.start()
-            mediaPlayer.setOnCompletionListener { mp -> mp.release() }
-        }
-
-        Toast.makeText(this, "Added $chord to song", Toast.LENGTH_SHORT).show()
     }
 
     override fun onSupportNavigateUp(): Boolean {

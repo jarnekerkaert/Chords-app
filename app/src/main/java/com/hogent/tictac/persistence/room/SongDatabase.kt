@@ -1,10 +1,9 @@
-package com.hogent.tictac.persistence.database
+package com.hogent.tictac.persistence.room
 
 import android.content.Context
 import androidx.room.*
-import com.hogent.tictac.common.Model
+import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.persistence.Converters
-import com.hogent.tictac.persistence.SongDao
 
 @Database(entities = [Model.Song::class], version = 2)
 @TypeConverters(Converters::class)

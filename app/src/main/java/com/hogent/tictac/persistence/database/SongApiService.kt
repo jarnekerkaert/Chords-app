@@ -1,6 +1,6 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.database
 
-import com.hogent.tictac.common.Model
+import com.hogent.tictac.persistence.Model
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET

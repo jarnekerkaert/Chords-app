@@ -1,10 +1,10 @@
-package com.hogent.tictac.persistence
+package com.hogent.tictac.persistence.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.hogent.tictac.common.Model
+import com.hogent.tictac.persistence.Model
 
 @Dao
 interface SongDao {

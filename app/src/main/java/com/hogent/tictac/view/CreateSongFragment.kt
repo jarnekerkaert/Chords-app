@@ -1,4 +1,4 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.hogent.tictac.common.Model
-import com.hogent.tictac.common.Note
-import com.hogent.tictac.view.SongViewModel
+import com.hogent.tictac.MainActivity
+import com.hogent.tictac.R
+import com.hogent.tictac.persistence.Model
+import com.hogent.tictac.viewmodel.SongViewModel
 import kotlinx.android.synthetic.main.fragment_create_song.*
 import java.util.*
 
@@ -38,7 +39,6 @@ class CreateSongFragment : Fragment() {
         navController = this.findNavController()
 
         val actionBar: ActionBar? = (activity as MainActivity).supportActionBar
-        actionBar?.title = "Create song"
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
 
@@ -50,7 +50,7 @@ class CreateSongFragment : Fragment() {
 
         val adapter = ArrayAdapter(
                 context!!, R.layout.dropdown_menu_popup_item,
-                Note.values()
+            Model.Note.values()
         )
 
         song_key.setAdapter(adapter)
@@ -60,9 +60,9 @@ class CreateSongFragment : Fragment() {
                 Toast.makeText(context!!, "Select a key", Toast.LENGTH_SHORT).show()
             else {
                 songViewModel.songSelected.value = Model.Song(
-                        Note.valueOf(song_key.text.toString().toUpperCase()),
+                    Model.Note.valueOf(song_key.text.toString().toUpperCase()),
                         song_chord.text.toString(),
-                        arrayListOf(),
+                        mutableListOf(),
                         UUID.randomUUID().toString()
                 )
 

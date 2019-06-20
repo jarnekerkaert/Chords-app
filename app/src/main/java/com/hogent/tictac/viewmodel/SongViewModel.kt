@@ -1,12 +1,10 @@
-package com.hogent.tictac.view
+package com.hogent.tictac.viewmodel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.hogent.tictac.common.Model
-import com.hogent.tictac.persistence.InjectedViewModel
-import com.hogent.tictac.persistence.SongApiService
-import com.hogent.tictac.persistence.SongRepository
+import com.hogent.tictac.persistence.Model
+import com.hogent.tictac.persistence.database.SongApiService
+import com.hogent.tictac.persistence.room.SongRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -47,7 +45,7 @@ class SongViewModel : InjectedViewModel() {
                     Log.d("SAVE", "SUCCESS")
                 },
                 { error ->
-                    Log.d("SAVE", "FAILED")
+                    Log.d("SAVE", error.toString())
                 }
             )
     }

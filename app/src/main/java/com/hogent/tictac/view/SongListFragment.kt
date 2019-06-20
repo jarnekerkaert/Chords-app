@@ -1,19 +1,20 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hogent.tictac.common.Model
-import com.hogent.tictac.view.SongViewModel
-import com.hogent.tictac.view.SongAdapter
+import com.hogent.tictac.MainActivity
+import com.hogent.tictac.R
+import com.hogent.tictac.viewmodel.SongViewModel
+import com.hogent.tictac.viewmodel.SongAdapter
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 class SongListFragment : Fragment() {
@@ -38,7 +39,6 @@ class SongListFragment : Fragment() {
         navController = this.findNavController()
 
         val actionBar: ActionBar? = (activity as MainActivity).supportActionBar
-        actionBar?.title = "Song list"
         actionBar?.setDisplayHomeAsUpEnabled(false)
         actionBar?.setDisplayShowHomeEnabled(false)
 
@@ -55,7 +55,7 @@ class SongListFragment : Fragment() {
 
         song_list.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = SongAdapter(songViewModel.songs.value ?: arrayOf(), listener)
+            adapter = SongAdapter(viewLifecycleOwner, songViewModel, listener)
         }
 
         song_list_create.setOnClickListener {

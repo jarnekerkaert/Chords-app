@@ -1,7 +1,7 @@
-package com.hogent.tictac.persistence.database
+package com.hogent.tictac.persistence
 
 import android.app.Application
-import com.hogent.tictac.persistence.module.DatabaseModule
+import com.hogent.tictac.persistence.room.DatabaseModule
 
 class App: Application() {
 

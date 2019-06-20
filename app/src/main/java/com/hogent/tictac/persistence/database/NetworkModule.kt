@@ -1,6 +1,5 @@
-package com.hogent.tictac.persistence.module
+package com.hogent.tictac.persistence.database
 
-import com.hogent.tictac.persistence.SongApiService
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers

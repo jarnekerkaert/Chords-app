@@ -1,5 +1,6 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +11,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hogent.tictac.view.SongViewModel
-import com.hogent.tictac.view.ChordAdapter
-import kotlinx.android.synthetic.main.fragment_song_chords.*
+import com.hogent.tictac.R
+import com.hogent.tictac.viewmodel.SongViewModel
+import com.hogent.tictac.viewmodel.ChordAdapter
 import kotlinx.android.synthetic.main.fragment_song_chords.chord_list
 import kotlinx.android.synthetic.main.fragment_song_detail.*
-import java.lang.IllegalStateException
-import android.media.MediaPlayer.OnCompletionListener
 
 
 class SongDetailFragment : Fragment() {
@@ -48,8 +47,11 @@ class SongDetailFragment : Fragment() {
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ChordAdapter(
-                    songViewModel.songSelected.value!!.chords.map { c -> c.name },
-                    null
+                songViewModel.songSelected.value!!.chords.map { c -> c.name }, object: ChordAdapter.OnChordClickListener {
+                    override fun onChordClick(item: String) {
+
+                    }
+                }
             )
         }
 
@@ -58,14 +60,17 @@ class SongDetailFragment : Fragment() {
                 for (chord in songViewModel.songSelected.value!!.chords) {
                     val chordId = resources.getIdentifier(chord.name.toLowerCase(), "raw", activity!!.packageName)
                     if (chordId != 0) {
-                        if(mediaPlayer.isPlaying)
+                        if(mediaPlayer.isPlaying) {
                             mediaPlayer.stop()
+                            mediaPlayer.reset()
+                        }
                         mediaPlayer = MediaPlayer.create(activity, chordId)
                         mediaPlayer.start()
-                        mediaPlayer.setOnCompletionListener { mp -> mp.release() }
+                        mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
                     }
                     Thread.sleep(1000)
                 }
+                mediaPlayer.stop()
             }
     }
 }
