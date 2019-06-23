@@ -11,20 +11,32 @@ class DatabaseModule(private val application: Application) {
 
     @Provides
     @Singleton
-    internal fun provideSongRepository(userDao: SongDao): SongRepository {
-        return SongRepository(userDao)
+    internal fun provideSongRepository(songDao: SongDao): SongRepository {
+        return SongRepository(songDao)
     }
 
     @Provides
     @Singleton
-    internal fun provideSongDao(songDatabase: SongDatabase): SongDao {
-        return songDatabase.songDao()
+    internal fun provideSongDao(chordsDatabase: ChordsDatabase): SongDao {
+        return chordsDatabase.songDao()
     }
 
     @Provides
     @Singleton
-    internal fun provideSongDatabase(context: Context): SongDatabase {
-        return SongDatabase.getDatabase(context)
+    internal fun provideUserRepository(userDao: UserDao): UserRepository {
+        return UserRepository(userDao)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideUserDao(chordsDatabase: ChordsDatabase): UserDao {
+        return chordsDatabase.userDao()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideSongDatabase(context: Context): ChordsDatabase {
+        return ChordsDatabase.getDatabase(context)
     }
 
     @Provides

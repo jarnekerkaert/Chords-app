@@ -12,7 +12,7 @@ abstract class InjectedViewModel : ViewModel() {
     private fun inject() {
         when (this) {
             is SongViewModel -> App.component.inject(this)
-
+            is UserViewModel -> App.component.inject(this)
         }
     }
 }

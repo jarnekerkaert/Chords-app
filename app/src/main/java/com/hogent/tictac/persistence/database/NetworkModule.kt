@@ -19,6 +19,11 @@ class NetworkModule {
     }
 
     @Provides
+    internal fun provideUserApi(retrofit: Retrofit): UserApiService {
+        return retrofit.create(UserApiService::class.java)
+    }
+
+    @Provides
     internal fun provideRetrofitInterface(): Retrofit {
         val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY

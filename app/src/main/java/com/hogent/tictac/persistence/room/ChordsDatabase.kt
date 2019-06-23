@@ -5,17 +5,18 @@ import androidx.room.*
 import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.persistence.Converters
 
-@Database(entities = [Model.Song::class], version = 2)
+@Database(entities = [Model.Song::class, Model.User::class], version = 3)
 @TypeConverters(Converters::class)
-abstract class SongDatabase : RoomDatabase() {
+abstract class ChordsDatabase : RoomDatabase() {
 
     abstract fun songDao(): SongDao
+    abstract fun userDao(): UserDao
 
     companion object {
         @Volatile
-        private var INSTANCE: SongDatabase? = null
+        private var INSTANCE: ChordsDatabase? = null
 
-        fun getDatabase(context: Context): SongDatabase {
+        fun getDatabase(context: Context): ChordsDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -24,7 +25,7 @@ abstract class SongDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                         context.applicationContext,
-                        SongDatabase::class.java,
+                        ChordsDatabase::class.java,
                         "Song_database"
                 ).allowMainThreadQueries().build()
                 INSTANCE = instance

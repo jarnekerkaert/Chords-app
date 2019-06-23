@@ -25,12 +25,12 @@ object Model {
     )
 
     data class Login(
-        var username: String,
+        var name: String,
         var password: String
     )
 
     data class Register(
-        var username: String,
+        var name: String,
         var password: String
     )
 
