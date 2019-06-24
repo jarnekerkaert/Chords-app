@@ -1,5 +1,7 @@
-package com.hogent.tictac.persistence.database
+package com.hogent.tictac.persistence.network
 
+import android.content.Context
+import android.util.Log
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -24,20 +26,30 @@ class NetworkModule {
     }
 
     @Provides
-    internal fun provideRetrofitInterface(): Retrofit {
+    internal fun provideRetrofitInterface(context: Context, authToken: String): Retrofit {
         val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY
         }
-
+        Log.i("AUTH_TOKEN", authToken)
         val client: OkHttpClient = OkHttpClient.Builder().apply {
-            addInterceptor(interceptor)
+            if (authToken != "none")
+                addInterceptor(BasicAuthInterceptor(authToken))
+            else
+                addInterceptor(interceptor)
         }.build()
 
         return Retrofit.Builder()
-                .baseUrl(LOCAL_BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .build()
+            .baseUrl(LOCAL_BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .build()
+    }
+
+    @Provides
+    internal fun getAuthToken(context: Context): String {
+        return context
+            .getSharedPreferences("user", Context.MODE_PRIVATE)
+            .getString("token", "none")!!
     }
 }

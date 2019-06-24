@@ -69,7 +69,7 @@ class LoginFragment : Fragment() {
                 userViewModel.login(
                     Model.Login(
                         login_username.text.toString(),
-                        BCrypt.hashpw(login_password.text.toString(), BCrypt.gensalt())
+                        login_password.text.toString()
                     )
                 )
             }

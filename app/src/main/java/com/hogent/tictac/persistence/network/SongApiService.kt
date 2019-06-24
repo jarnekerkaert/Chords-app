@@ -1,4 +1,4 @@
-package com.hogent.tictac.persistence.database
+package com.hogent.tictac.persistence.network
 
 import com.hogent.tictac.persistence.Model
 import io.reactivex.Observable

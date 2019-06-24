@@ -1,6 +1,6 @@
 package com.hogent.tictac.persistence
 
-import com.hogent.tictac.persistence.database.NetworkModule
+import com.hogent.tictac.persistence.network.NetworkModule
 import com.hogent.tictac.persistence.room.DatabaseModule
 import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.UserViewModel
