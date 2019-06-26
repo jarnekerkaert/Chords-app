@@ -36,8 +36,18 @@ class SongViewModel : InjectedViewModel() {
             )
     }
 
-    fun saveSong() {
-        songApiService.addSong(songSelected.value!!)
+    fun setSong(id: String) {
+        subscribe = songApiService.findSongById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result -> songSelected.value = result },
+                { error -> Log.d("SAVE", error.toString()) }
+            )
+    }
+
+    fun saveSong(userId: String) {
+        songApiService.addSong(userId, songSelected.value!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

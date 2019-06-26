@@ -1,6 +1,5 @@
 package com.hogent.tictac.view
 
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +11,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hogent.tictac.R
-import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.ChordAdapter
+import com.hogent.tictac.viewmodel.SongViewModel
 import kotlinx.android.synthetic.main.fragment_song_chords.chord_list
 import kotlinx.android.synthetic.main.fragment_song_detail.*
 
@@ -46,8 +45,8 @@ class SongDetailFragment : Fragment() {
 
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ChordAdapter(
-                songViewModel.songSelected.value!!.chords.map { c -> c.name }, object: ChordAdapter.OnChordClickListener {
+            adapter =
+                ChordAdapter(viewLifecycleOwner, songViewModel, false, object : ChordAdapter.OnChordClickListener {
                     override fun onChordClick(item: String) {
 
                     }

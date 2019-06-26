@@ -30,13 +30,14 @@ class UserViewModel : InjectedViewModel() {
     lateinit var context: Context
 
     fun login(loginDetails: Model.Login) {
-        setToken(Credentials.basic(loginDetails.name, loginDetails.password))
-        subscription = userApiService.login()
+        val credentials = Credentials.basic(loginDetails.name, loginDetails.password)
+        subscription = userApiService.login(credentials)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { user ->
                     onRetrieve(user)
+                    setToken(credentials)
                 },
                 { error ->
                     Log.d("LOGIN", "$error")
@@ -51,6 +52,7 @@ class UserViewModel : InjectedViewModel() {
             .subscribe(
                 { user ->
                     onRetrieve(user)
+                    setToken(Credentials.basic(user.name, user.password))
                 },
                 { error ->
                     Log.d("REGISTER", "$error")
@@ -64,8 +66,6 @@ class UserViewModel : InjectedViewModel() {
     }
 
     private fun onRetrieve(user: Model.User) {
-        val userToken = Credentials.basic(user.name, user.password)
-        setToken(userToken)
         currentUser.value = user
         userRepository.insert(user)
     }

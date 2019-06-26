@@ -4,19 +4,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.tictac.R
-import com.hogent.tictac.view.SongChordsFragment
+import com.hogent.tictac.persistence.Model
+import java.util.*
 
 class ChordAdapter(
-        private val chords: List<String>,
-        private val mListener: OnChordClickListener
+    lifecycleOwner: LifecycleOwner,
+    songViewModel: SongViewModel,
+    private val scaleOfSongKey: Boolean,
+    private val mListener: OnChordClickListener
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
 
+    private var chords: List<String> = listOf()
     private val onClickListener: View.OnClickListener
 
     init {
+        songViewModel.songSelected.observe(lifecycleOwner, Observer {
+            if (chords.isEmpty()) {
+                chords = if (scaleOfSongKey)
+                    this.scaleOfKey(it!!.key.name)
+                else
+                    it!!.chords.map { c -> c.name }
+                this.notifyDataSetChanged()
+            }
+        })
+
         onClickListener = View.OnClickListener { v ->
             val item = v.tag as String
             mListener.onChordClick(item)
@@ -47,5 +62,11 @@ class ChordAdapter(
 
     interface OnChordClickListener {
         fun onChordClick(item: String)
+    }
+
+    private fun scaleOfKey(key: String): List<String> {
+        val chords = Model.Note.values().map { c -> c.name }
+        Collections.rotate(chords, -(Model.Note.valueOf(key).ordinal))
+        return listOf(chords[0], chords[2], chords[4], chords[5], chords[7], chords[9], chords[11])
     }
 }

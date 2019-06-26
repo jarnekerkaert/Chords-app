@@ -13,18 +13,18 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hogent.tictac.MainActivity
+import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.viewmodel.ChordAdapter
 import com.hogent.tictac.viewmodel.SongViewModel
+import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_song_chords.*
-import java.util.*
-import android.content.Context
-import com.hogent.tictac.R
 
 
 class SongChordsFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
+    private lateinit var userViewModel: UserViewModel
     private lateinit var navController: NavController
     private lateinit var mediaPlayer: MediaPlayer
 
@@ -37,6 +37,10 @@ class SongChordsFragment : Fragment() {
 
         songViewModel = activity?.run {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
+        } ?: throw Exception("Invalid activity")
+
+        userViewModel = activity?.run {
+            ViewModelProviders.of(this).get(UserViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
         mediaPlayer = MediaPlayer()
@@ -54,7 +58,9 @@ class SongChordsFragment : Fragment() {
 
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ChordAdapter(scaleOfKey(songViewModel.songSelected.value!!.key.name), object: ChordAdapter.OnChordClickListener {
+            adapter = ChordAdapter(
+                viewLifecycleOwner, songViewModel, true,
+                object : ChordAdapter.OnChordClickListener {
                 override fun onChordClick(item: String) {
                     songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
 
@@ -75,16 +81,8 @@ class SongChordsFragment : Fragment() {
         }
 
         song_chords_save.setOnClickListener {
-            songViewModel.saveSong()
+            songViewModel.saveSong(userViewModel.databaseUser.value!!.id)
             navController.navigate(R.id.action_songChordsFragment_to_songDetailFragment)
         }
-    }
-
-    private fun scaleOfKey(key: String): List<String> {
-        val chords = Model.Note.values().map { c -> c.name }
-
-        Collections.rotate(chords, -(Model.Note.valueOf(key).ordinal))
-
-        return listOf(chords[0], chords[2], chords[4], chords[5], chords[7], chords[9], chords[11])
     }
 }

@@ -10,7 +10,7 @@ import retrofit2.http.POST
 interface UserApiService {
 
     @GET("/login")
-    fun login(): Observable<Model.User>
+    fun login(@Header("Authorization") header: String): Observable<Model.User>
 
     @POST("/register")
     fun register(@Body response: Model.Register): Observable<Model.User>
