@@ -46,13 +46,14 @@ class UserViewModel : InjectedViewModel() {
     }
 
     fun register(registerDetails: Model.Register) {
+        val credentials = Credentials.basic(registerDetails.name, registerDetails.password)
         subscription = userApiService.register(registerDetails)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { user ->
                     onRetrieve(user)
-                    setToken(Credentials.basic(user.name, user.password))
+                    setToken(credentials)
                 },
                 { error ->
                     Log.d("REGISTER", "$error")

@@ -1,5 +1,6 @@
 package com.hogent.tictac.view
 
+import android.app.Activity
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -57,17 +58,19 @@ class SongDetailFragment : Fragment() {
         if (songViewModel.songSelected.value != null)
             play_button.setOnClickListener {
                 for (chord in songViewModel.songSelected.value!!.chords) {
-                    val chordId = resources.getIdentifier(chord.name.toLowerCase(), "raw", activity!!.packageName)
-                    if (chordId != 0) {
-                        if(mediaPlayer.isPlaying) {
-                            mediaPlayer.stop()
-                            mediaPlayer.reset()
+                    if (!(context as Activity).isFinishing) {
+                        val chordId = resources.getIdentifier(chord.name.toLowerCase(), "raw", activity!!.packageName)
+                        if (chordId != 0) {
+                            if (mediaPlayer.isPlaying) {
+                                mediaPlayer.stop()
+                                mediaPlayer.reset()
+                            }
+                            mediaPlayer = MediaPlayer.create(activity, chordId)
+                            mediaPlayer.start()
+                            mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
                         }
-                        mediaPlayer = MediaPlayer.create(activity, chordId)
-                        mediaPlayer.start()
-                        mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
+                        Thread.sleep(1000)
                     }
-                    Thread.sleep(1000)
                 }
                 mediaPlayer.stop()
             }

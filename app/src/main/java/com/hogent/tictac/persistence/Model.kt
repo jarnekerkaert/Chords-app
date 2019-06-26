@@ -20,8 +20,7 @@ object Model {
     data class User(
         @PrimaryKey var id: String,
         var name: String,
-        var password: String,
-        var songs: ArrayList<Song> = arrayListOf()
+        var songs: ArrayList<String> = arrayListOf()
     )
 
     data class Login(

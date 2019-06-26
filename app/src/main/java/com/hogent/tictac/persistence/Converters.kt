@@ -18,22 +18,36 @@ class Converters {
 
     @TypeConverter
     fun daysOfWeekToString(chords: MutableList<Model.Note>?): String? =
-            chords?.map { it.name }?.joinToString(separator = SEPARATOR)
+        chords?.joinToString(separator = SEPARATOR) { it.name }
 
     @TypeConverter
     fun stringToDaysOfWeek(chords: String?): MutableList<Model.Note>? =
             chords?.split(SEPARATOR)?.map { Model.Note.valueOf(it) }?.toMutableList()
 
     @TypeConverter
-    fun fromString(value: String): ArrayList<Model.Song> {
+    fun fromSongStrings(value: String): ArrayList<Model.Song> {
         val listType = object : TypeToken<ArrayList<Model.Song>>() {
 
-        }.getType()
+        }.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun fromArrayList(list: ArrayList<Model.Song>): String {
+    fun fromSongArrayList(list: ArrayList<Model.Song>): String {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
+    @TypeConverter
+    fun fromString(value: String): ArrayList<String> {
+        val listType = object : TypeToken<ArrayList<String>>() {
+
+        }.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromArrayList(list: ArrayList<String>): String {
         val gson = Gson()
         return gson.toJson(list)
     }
