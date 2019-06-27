@@ -1,7 +1,6 @@
 package com.hogent.tictac.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hogent.tictac.persistence.Model
@@ -17,6 +16,7 @@ class UserViewModel : InjectedViewModel() {
 
     var currentUser = MutableLiveData<Model.User>()
     var databaseUser: LiveData<Model.User> = userRepository.user
+    var userToast = MutableLiveData<String>()
 
     private lateinit var subscription: Disposable
 
@@ -38,9 +38,10 @@ class UserViewModel : InjectedViewModel() {
                 { user ->
                     onRetrieve(user)
                     setToken(credentials)
+                    userToast.value = "Login successful!"
                 },
                 { error ->
-                    Log.d("LOGIN", "$error")
+                    userToast.value = "Given user/password doesn't exist"
                 }
             )
     }
@@ -54,9 +55,10 @@ class UserViewModel : InjectedViewModel() {
                 { user ->
                     onRetrieve(user)
                     setToken(credentials)
+                    userToast.value = "Registration successful!"
                 },
                 { error ->
-                    Log.d("REGISTER", "$error")
+                    userToast.value = "Registration failed."
                 }
             )
     }

@@ -25,9 +25,9 @@ class ChordAdapter(
         songViewModel.songSelected.observe(lifecycleOwner, Observer {
             if (chords.isEmpty()) {
                 chords = if (scaleOfSongKey)
-                    this.scaleOfKey(it!!.key.name)
+                    this.scaleOfKey(it?.key?.name ?: "C")
                 else
-                    it!!.chords.map { c -> c.name }
+                    it?.chords?.map { c -> c.name } ?: listOf()
                 this.notifyDataSetChanged()
             }
         })

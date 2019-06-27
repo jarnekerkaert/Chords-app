@@ -13,13 +13,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.hogent.tictac.persistence.Model
+import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var songViewModel: SongViewModel
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        songViewModel = ViewModelProviders.of(this).get(SongViewModel::class.java)
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(app_toolbar as Toolbar?)
@@ -41,6 +45,18 @@ class MainActivity : AppCompatActivity() {
         userViewModel.databaseUser.observe(this, Observer<Model.User?> {
             if (it != null) {
                 navController.navigate(R.id.songListFragment)
+            }
+        })
+
+        userViewModel.userToast.observe(this, Observer {
+            if (it != null) {
+                toast(it).show()
+            }
+        })
+
+        songViewModel.songToast.observe(this, Observer {
+            if (it != null) {
+                toast(it).show()
             }
         })
     }
