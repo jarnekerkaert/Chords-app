@@ -1,4 +1,4 @@
-package com.hogent.tictac
+package com.hogent.tictac.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hogent.tictac.view.SongViewModel
-import com.hogent.tictac.view.SongAdapter
+import com.hogent.tictac.MainActivity
+import com.hogent.tictac.R
+import com.hogent.tictac.viewmodel.SongAdapter
+import com.hogent.tictac.viewmodel.SongViewModel
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 class SongListFragment : Fragment() {
@@ -20,9 +22,9 @@ class SongListFragment : Fragment() {
     private lateinit var navController: NavController
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_song_list, container, false)
 
@@ -30,10 +32,10 @@ class SongListFragment : Fragment() {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
+        songViewModel.retrieveSongs()
         navController = this.findNavController()
 
         val actionBar: ActionBar? = (activity as MainActivity).supportActionBar
-        actionBar?.title = "Song list"
         actionBar?.setDisplayHomeAsUpEnabled(false)
         actionBar?.setDisplayShowHomeEnabled(false)
 
@@ -45,7 +47,12 @@ class SongListFragment : Fragment() {
 
         song_list.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = SongAdapter(songViewModel.allSongs())
+            adapter = SongAdapter(viewLifecycleOwner, songViewModel, object : SongAdapter.OnSongClickListener {
+                override fun onSongClick(item: String) {
+                    songViewModel.setSong(item)
+                    navController.navigate(R.id.action_songListFragment_to_songDetailFragment)
+                }
+            })
         }
 
         song_list_create.setOnClickListener {

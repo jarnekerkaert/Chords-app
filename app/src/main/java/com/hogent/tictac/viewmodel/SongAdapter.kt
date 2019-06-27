@@ -1,24 +1,43 @@
-package com.hogent.tictac.view
+package com.hogent.tictac.viewmodel
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.tictac.R
-import com.hogent.tictac.common.Model
+import com.hogent.tictac.persistence.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
 
 class SongAdapter(
-    private val songs: List<Model.Song>
+    lifecycleOwner: LifecycleOwner,
+    private val songViewModel: SongViewModel,
+    private val mListener: OnSongClickListener
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
+    private var songs: Array<Model.Song> = arrayOf()
+    private val onClickListener: View.OnClickListener
+
+    init {
+        songViewModel.songs.observe(lifecycleOwner, Observer {
+            if (songs.isEmpty()) {
+                songs = it!!
+                this.notifyDataSetChanged()
+            }
+        })
+
+        onClickListener = View.OnClickListener { v ->
+            val item = v.tag as Model.Song
+            mListener.onSongClick(item.id)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_song, parent, false)
+                .inflate(R.layout.fragment_song, parent, false)
         return ViewHolder(view)
     }
 
@@ -28,9 +47,8 @@ class SongAdapter(
         holder.songTitle.text = item.title
 
         with(holder.parentLayout) {
-            setOnClickListener {
-                Log.d("Clicked: ", item.title)
-            }
+            tag = item
+            setOnClickListener(onClickListener)
         }
     }
 
@@ -40,5 +58,9 @@ class SongAdapter(
         val songKey: TextView = view.song_key
         val songTitle: TextView = view.song_title
         val parentLayout: RelativeLayout = view.parent_layout
+    }
+
+    interface OnSongClickListener {
+        fun onSongClick(item: String)
     }
 }

@@ -10,7 +10,7 @@ android {
     defaultConfig {
 
         applicationId "com.hogent.tictac"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -34,10 +34,14 @@ dependencies {
     // VERSION DEFINITIONS
     def room_version = "2.1.0"
     def dagger_version = "2.23.1"
+    def retrofit_version = "2.4.0"
+    def okhttp_version = "4.0.0-RC1"
+    def anko_version = "0.10.7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
 
     // LAYOUT LIBRARIES
     implementation 'com.android.support:cardview-v7:28.0.0'
@@ -48,6 +52,10 @@ dependencies {
     // NAVIGATION
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+
+    //ANKO
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
 
     // ROOM
     implementation "androidx.room:room-runtime:$room_version"
@@ -60,8 +68,28 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
+    // RETROFIT
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    //OKHTTP
+    implementation "com.squareup.okhttp3:okhttp:3.12.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.0"
+
+    // REACTIVE JAVA
+    implementation "io.reactivex.rxjava2:rxjava:2.2.4"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+
     // CONVERSION
     implementation 'com.google.code.gson:gson:2.8.2'
+
+    // ANKO
+    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // BCRYPT
+    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
     // TEST
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
