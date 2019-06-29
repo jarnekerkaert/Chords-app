@@ -1,6 +1,6 @@
 package com.hogent.tictac.viewmodel
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.persistence.network.SongApiService
@@ -13,6 +13,7 @@ import javax.inject.Inject
 class SongViewModel : InjectedViewModel() {
     var songSelected = MutableLiveData<Model.Song>()
     var songs = MutableLiveData<Array<Model.Song>>()
+    var songToast = MutableLiveData<String>()
 
     private lateinit var subscribe: Disposable
 
@@ -31,21 +32,33 @@ class SongViewModel : InjectedViewModel() {
                     songs.postValue(result)
                 },
                 { error ->
-                    Log.d("SONG_LIST", "$error")
+                    songToast.value = "Error retrieving songs"
                 }
             )
     }
 
-    fun saveSong() {
-        songApiService.addSong(songSelected.value!!)
+    fun setSong(id: String) {
+        songSelected.value = null
+        subscribe = songApiService.findSongById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result -> songSelected.value = result },
+                { error -> songToast.value = "Song not found" }
+            )
+    }
+
+    @SuppressLint("CheckResult")
+    fun saveSong(userId: String) {
+        songApiService.addSong(userId, songSelected.value!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result ->
-                    Log.d("SAVE", "SUCCESS")
+                    songToast.value = "Song saved as ${result.title}!"
                 },
                 { error ->
-                    Log.d("SAVE", error.toString())
+                    songToast.value = "Failed to save song"
                 }
             )
     }

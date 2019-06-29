@@ -15,6 +15,6 @@ interface SongApiService {
     @GET("/songs/{id}")
     fun findSongById(@Path("id") id: String): Observable<Model.Song>
 
-    @POST("/songs")
-    fun addSong(@Body song: Model.Song): Observable<Model.Song>
+    @POST("/user/{id}")
+    fun addSong(@Path("id") id: String, @Body song: Model.Song): Observable<Model.Song>
 }

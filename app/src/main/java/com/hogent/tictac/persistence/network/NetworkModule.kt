@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class NetworkModule {
-    val LOCAL_BASE_URL = "http://192.168.145.69:8080"
+    val LOCAL_BASE_URL = "http://192.168.178.74:8080"
 
     @Provides
     internal fun provideSongApi(retrofit: Retrofit): SongApiService {
@@ -34,8 +34,7 @@ class NetworkModule {
         val client: OkHttpClient = OkHttpClient.Builder().apply {
             if (authToken != "none")
                 addInterceptor(BasicAuthInterceptor(authToken))
-            else
-                addInterceptor(interceptor)
+            addInterceptor(interceptor)
         }.build()
 
         return Retrofit.Builder()

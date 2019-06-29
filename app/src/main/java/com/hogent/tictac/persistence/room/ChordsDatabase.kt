@@ -1,11 +1,14 @@
 package com.hogent.tictac.persistence.room
 
 import android.content.Context
-import androidx.room.*
-import com.hogent.tictac.persistence.Model
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.hogent.tictac.persistence.Converters
+import com.hogent.tictac.persistence.Model
 
-@Database(entities = [Model.Song::class, Model.User::class], version = 3)
+@Database(entities = [Model.Song::class, Model.User::class], version = 5)
 @TypeConverters(Converters::class)
 abstract class ChordsDatabase : RoomDatabase() {
 

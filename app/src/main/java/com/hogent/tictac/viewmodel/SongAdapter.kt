@@ -15,10 +15,11 @@ import kotlinx.android.synthetic.main.fragment_song.view.*
 class SongAdapter(
     lifecycleOwner: LifecycleOwner,
     private val songViewModel: SongViewModel,
-    private val listener: View.OnClickListener
+    private val mListener: OnSongClickListener
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
 
     private var songs: Array<Model.Song> = arrayOf()
+    private val onClickListener: View.OnClickListener
 
     init {
         songViewModel.songs.observe(lifecycleOwner, Observer {
@@ -27,6 +28,11 @@ class SongAdapter(
                 this.notifyDataSetChanged()
             }
         })
+
+        onClickListener = View.OnClickListener { v ->
+            val item = v.tag as Model.Song
+            mListener.onSongClick(item.id)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,9 +47,8 @@ class SongAdapter(
         holder.songTitle.text = item.title
 
         with(holder.parentLayout) {
-            setOnClickListener {
-                listener.onClick(holder.itemView)
-            }
+            tag = item
+            setOnClickListener(onClickListener)
         }
     }
 
@@ -53,5 +58,9 @@ class SongAdapter(
         val songKey: TextView = view.song_key
         val songTitle: TextView = view.song_title
         val parentLayout: RelativeLayout = view.parent_layout
+    }
+
+    interface OnSongClickListener {
+        fun onSongClick(item: String)
     }
 }

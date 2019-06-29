@@ -1,7 +1,6 @@
 package com.hogent.tictac.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.hogent.tictac.persistence.Model
@@ -17,6 +16,7 @@ class UserViewModel : InjectedViewModel() {
 
     var currentUser = MutableLiveData<Model.User>()
     var databaseUser: LiveData<Model.User> = userRepository.user
+    var userToast = MutableLiveData<String>()
 
     private lateinit var subscription: Disposable
 
@@ -30,30 +30,35 @@ class UserViewModel : InjectedViewModel() {
     lateinit var context: Context
 
     fun login(loginDetails: Model.Login) {
-        setToken(Credentials.basic(loginDetails.name, loginDetails.password))
-        subscription = userApiService.login()
+        val credentials = Credentials.basic(loginDetails.name, loginDetails.password)
+        subscription = userApiService.login(credentials)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { user ->
                     onRetrieve(user)
+                    setToken(credentials)
+                    userToast.value = "Login successful!"
                 },
                 { error ->
-                    Log.d("LOGIN", "$error")
+                    userToast.value = "Given user/password doesn't exist"
                 }
             )
     }
 
     fun register(registerDetails: Model.Register) {
+        val credentials = Credentials.basic(registerDetails.name, registerDetails.password)
         subscription = userApiService.register(registerDetails)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { user ->
                     onRetrieve(user)
+                    setToken(credentials)
+                    userToast.value = "Registration successful!"
                 },
                 { error ->
-                    Log.d("REGISTER", "$error")
+                    userToast.value = "Registration failed."
                 }
             )
     }
@@ -64,8 +69,6 @@ class UserViewModel : InjectedViewModel() {
     }
 
     private fun onRetrieve(user: Model.User) {
-        val userToken = Credentials.basic(user.name, user.password)
-        setToken(userToken)
         currentUser.value = user
         userRepository.insert(user)
     }
