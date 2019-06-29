@@ -29,9 +29,9 @@ class SongChordsFragment : Fragment() {
     private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_song_chords, container, false)
 
@@ -56,28 +56,40 @@ class SongChordsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        all_chords_list.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = ChordAdapter(
+                    viewLifecycleOwner, songViewModel, true,
+                    object : ChordAdapter.OnChordClickListener {
+                        override fun onChordClick(item: String) {
+                            songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
+
+                            val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
+                            if (chordId != 0) {
+                                if (mediaPlayer.isPlaying) {
+                                    mediaPlayer.stop()
+                                    mediaPlayer.reset()
+                                }
+                                mediaPlayer = MediaPlayer.create(activity, chordId)
+                                mediaPlayer.start()
+                                mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
+                            }
+
+                            Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+        }
+
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ChordAdapter(
-                viewLifecycleOwner, songViewModel, true,
-                object : ChordAdapter.OnChordClickListener {
-                override fun onChordClick(item: String) {
-                    songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
+                    viewLifecycleOwner, songViewModel, false,
+                    object : ChordAdapter.OnChordClickListener {
+                        override fun onChordClick(item: String) {
 
-                    val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
-                    if (chordId != 0) {
-                        if (mediaPlayer.isPlaying) {
-                            mediaPlayer.stop()
-                            mediaPlayer.reset()
                         }
-                        mediaPlayer = MediaPlayer.create(activity, chordId)
-                        mediaPlayer.start()
-                        mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
                     }
-
-                    Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
-                }
-            })
+            )
         }
 
         song_chords_save.setOnClickListener {

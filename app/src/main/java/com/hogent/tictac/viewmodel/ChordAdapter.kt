@@ -40,6 +40,7 @@ class ChordAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chord_list_item, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -65,8 +66,8 @@ class ChordAdapter(
     }
 
     private fun scaleOfKey(key: String): List<String> {
-        val chords = Model.Note.values().map { c -> c.name }
-        Collections.rotate(chords, -(Model.Note.valueOf(key).ordinal))
-        return listOf(chords[0], chords[2], chords[4], chords[5], chords[7], chords[9], chords[11])
+        val chords = Model.NoteMajor.values().map { c -> c.name }
+        Collections.rotate(chords, -(Model.NoteMajor.valueOf(key).ordinal))
+        return listOf(chords[0], "${chords[2]}M", "${chords[4]}M", chords[5], chords[7], "${chords[9]}M", "${chords[11]}M")
     }
 }

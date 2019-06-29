@@ -6,34 +6,27 @@
               android:gravity="center">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chord_list"
+            android:id="@+id/all_chords_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chord_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true">
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
-        <LinearLayout
-                android:id="@+id/song_chords"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-        </LinearLayout>
-    </HorizontalScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.button.MaterialButton
             android:id="@+id/song_chords_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="SAVE"
             android:textStyle="bold"/>
 </LinearLayout>
