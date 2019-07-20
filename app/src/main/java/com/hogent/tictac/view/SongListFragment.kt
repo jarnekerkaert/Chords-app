@@ -16,6 +16,7 @@ import com.hogent.tictac.viewmodel.SongAdapter
 import com.hogent.tictac.viewmodel.SongViewModel
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
+
 class SongListFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
@@ -54,6 +55,12 @@ class SongListFragment : Fragment() {
                 }
             })
         }
+
+        refreshLayout.setOnRefreshListener {
+            songViewModel.retrieveSongs()
+            refreshLayout.isRefreshing = false
+        }
+
 
         song_list_create.setOnClickListener {
             navController.navigate(R.id.action_songListFragment_to_createSongFragment)
