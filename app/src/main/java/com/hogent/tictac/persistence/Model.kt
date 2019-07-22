@@ -8,32 +8,36 @@ object Model {
 
     @Entity
     data class Song(
-        @TypeConverters(Converters::class)
-        var key: Note,
-        var title: String,
-        @TypeConverters(Converters::class)
-        var chords: MutableList<Note> = arrayListOf(),
-        @PrimaryKey var id: String
+            @TypeConverters(Converters::class)
+            var key: Note,
+            var title: String,
+            @TypeConverters(Converters::class)
+            var chords: MutableList<Note> = arrayListOf(),
+            @PrimaryKey var id: String
     )
 
     @Entity
     data class User(
-        @PrimaryKey var id: String,
-        var name: String,
-        var songs: ArrayList<String> = arrayListOf()
+            @PrimaryKey var id: String,
+            var name: String,
+            var songs: ArrayList<String> = arrayListOf()
     )
 
     data class Login(
-        var name: String,
-        var password: String
+            var name: String,
+            var password: String
     )
 
     data class Register(
-        var name: String,
-        var password: String
+            var name: String,
+            var password: String
     )
 
-    enum class Note {
+    enum class NoteMajor {
         C, CS, D, DS, E, F, FS, G, GS, A, AS, B
+    }
+
+    enum class Note {
+        C, CS, D, DS, E, F, FS, G, GS, A, AS, B, CM, CSM, DM, DSM, EM, FM, FSM, GM, GSM, AM, ASM, BM
     }
 }

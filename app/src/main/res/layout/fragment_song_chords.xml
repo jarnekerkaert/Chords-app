@@ -1,39 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:gravity="center">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chord_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:gravity="center">
 
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true">
-
-        <LinearLayout
-                android:id="@+id/song_chords"
-                android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/all_chords_list"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:orientation="horizontal">
 
-        </LinearLayout>
-    </HorizontalScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
 
-    <com.google.android.material.button.MaterialButton
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chord_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/song_chords_save"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/ic_baseline_save_24px"
+            android:layout_margin="16dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimaryLight"/>
 
-            android:text="SAVE"
-            android:textStyle="bold"/>
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/song_choose_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:src="@drawable/ic_baseline_vpn_key_24px"
+            android:layout_margin="16dp"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorAccent"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

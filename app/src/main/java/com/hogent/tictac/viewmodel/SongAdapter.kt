@@ -13,7 +13,7 @@ import com.hogent.tictac.persistence.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
 
 class SongAdapter(
-    lifecycleOwner: LifecycleOwner,
+    private val lifecycleOwner: LifecycleOwner,
     private val songViewModel: SongViewModel,
     private val mListener: OnSongClickListener
 ) : RecyclerView.Adapter<SongAdapter.ViewHolder>() {
@@ -22,12 +22,7 @@ class SongAdapter(
     private val onClickListener: View.OnClickListener
 
     init {
-        songViewModel.songs.observe(lifecycleOwner, Observer {
-            if (songs.isEmpty()) {
-                songs = it!!
-                this.notifyDataSetChanged()
-            }
-        })
+        reloadData()
 
         onClickListener = View.OnClickListener { v ->
             val item = v.tag as Model.Song
@@ -35,9 +30,16 @@ class SongAdapter(
         }
     }
 
+    fun reloadData() {
+        songViewModel.songs.observe(lifecycleOwner, Observer {
+            songs = it!!
+            this.notifyDataSetChanged()
+        })
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_song, parent, false)
+            .inflate(R.layout.fragment_song, parent, false)
         return ViewHolder(view)
     }
 

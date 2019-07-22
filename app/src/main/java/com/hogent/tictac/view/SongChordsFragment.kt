@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -18,15 +19,17 @@ import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.viewmodel.ChordAdapter
 import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.dialog_song_create.view.*
 import kotlinx.android.synthetic.main.fragment_song_chords.*
+import java.util.*
 
 
 class SongChordsFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
+    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var userViewModel: UserViewModel
     private lateinit var navController: NavController
-    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,33 +59,72 @@ class SongChordsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chord_list.apply {
+        songViewModel.songSelected.value = Model.Song(
+            Model.Note.C,
+            "",
+            mutableListOf(),
+            UUID.randomUUID().toString()
+        )
+
+        all_chords_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ChordAdapter(
                 viewLifecycleOwner, songViewModel, true,
                 object : ChordAdapter.OnChordClickListener {
-                override fun onChordClick(item: String) {
-                    songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
+                    override fun onChordClick(item: String) {
+                        songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
 
-                    val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
-                    if (chordId != 0) {
-                        if (mediaPlayer.isPlaying) {
-                            mediaPlayer.stop()
-                            mediaPlayer.reset()
-                        }
-                        mediaPlayer = MediaPlayer.create(activity, chordId)
-                        mediaPlayer.start()
-                        mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
+                        (chord_list.adapter as ChordAdapter).reloadData()
+
+                        playChord(item)
+
+                        Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
                     }
+                })
+        }
 
-                    Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
+        chord_list.apply {
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = ChordAdapter(
+                viewLifecycleOwner, songViewModel, false,
+                object : ChordAdapter.OnChordClickListener {
+                    override fun onChordClick(item: String) {
+                        playChord(item)
+                    }
                 }
-            })
+            )
         }
 
         song_chords_save.setOnClickListener {
-            songViewModel.saveSong(userViewModel.databaseUser.value!!.id)
-            navController.navigate(R.id.action_songChordsFragment_to_songDetailFragment)
+            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
+            AlertDialog.Builder(activity as MainActivity)
+                .setTitle("Give it a name")
+                .setView(view)
+                .setPositiveButton(
+                    "Create"
+                ) { _, _ ->
+                    songViewModel.songSelected.value?.title = view.song_name.text.toString()
+                    songViewModel.saveSong(userViewModel.databaseUser.value!!.id)
+                    navController.navigate(R.id.action_songChordsFragment_to_songDetailFragment)
+                }
+                .setNegativeButton(
+                    "Cancel"
+                ) { dialog, _ ->
+                    dialog!!.cancel()
+                }.show()
+        }
+    }
+
+    private fun playChord(item: String) {
+        val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
+        if (chordId != 0) {
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.stop()
+                mediaPlayer.reset()
+            }
+            mediaPlayer = MediaPlayer.create(activity, chordId)
+            mediaPlayer.start()
+            mediaPlayer.setOnCompletionListener { mp -> mp.reset() }
         }
     }
 }

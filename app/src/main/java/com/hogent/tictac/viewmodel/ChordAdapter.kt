@@ -12,8 +12,8 @@ import com.hogent.tictac.persistence.Model
 import java.util.*
 
 class ChordAdapter(
-    lifecycleOwner: LifecycleOwner,
-    songViewModel: SongViewModel,
+    private var lifecycleOwner: LifecycleOwner,
+    private var songViewModel: SongViewModel,
     private val scaleOfSongKey: Boolean,
     private val mListener: OnChordClickListener
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
@@ -22,15 +22,7 @@ class ChordAdapter(
     private val onClickListener: View.OnClickListener
 
     init {
-        songViewModel.songSelected.observe(lifecycleOwner, Observer {
-            if (chords.isEmpty()) {
-                chords = if (scaleOfSongKey)
-                    this.scaleOfKey(it?.key?.name ?: "C")
-                else
-                    it?.chords?.map { c -> c.name } ?: listOf()
-                this.notifyDataSetChanged()
-            }
-        })
+        reloadData()
 
         onClickListener = View.OnClickListener { v ->
             val item = v.tag as String
@@ -38,8 +30,19 @@ class ChordAdapter(
         }
     }
 
+    fun reloadData() {
+        songViewModel.songSelected.observe(lifecycleOwner, Observer {
+            chords = if (scaleOfSongKey)
+                this.scaleOfKey(it?.key?.name ?: "C")
+            else
+                it?.chords?.map { c -> c.name } ?: listOf()
+            this.notifyDataSetChanged()
+        })
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chord_list_item, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -65,8 +68,16 @@ class ChordAdapter(
     }
 
     private fun scaleOfKey(key: String): List<String> {
-        val chords = Model.Note.values().map { c -> c.name }
-        Collections.rotate(chords, -(Model.Note.valueOf(key).ordinal))
-        return listOf(chords[0], chords[2], chords[4], chords[5], chords[7], chords[9], chords[11])
+        val chords = Model.NoteMajor.values().map { c -> c.name }
+        Collections.rotate(chords, -(Model.NoteMajor.valueOf(key).ordinal))
+        return listOf(
+            chords[0],
+            "${chords[2]}M",
+            "${chords[4]}M",
+            chords[5],
+            chords[7],
+            "${chords[9]}M",
+            "${chords[11]}M"
+        )
     }
 }

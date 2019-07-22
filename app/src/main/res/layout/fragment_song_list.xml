@@ -7,10 +7,16 @@
         android:orientation="vertical"
         android:gravity="center">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/song_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/song_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/song_list_create"
@@ -21,5 +27,4 @@
             android:layout_margin="16dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorAccent"/>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
