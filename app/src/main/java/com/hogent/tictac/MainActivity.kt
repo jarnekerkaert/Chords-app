@@ -18,6 +18,7 @@ import com.hogent.tictac.persistence.Model
 import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 import org.jetbrains.anko.toast
 
 
@@ -52,8 +53,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         userViewModel.databaseUser.observe(this, Observer<Model.User?> {
             if (it != null) {
+                navigationView.getHeaderView(0)?.appCompatTextView!!.text = it.name
                 navController.navigate(R.id.songListFragment)
+            } else {
+                navigationView.getHeaderView(0)?.appCompatTextView!!.text = ""
             }
+            reloadMenu()
         })
 
         userViewModel.userToast.observe(this, Observer {
@@ -69,6 +74,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    private fun reloadMenu() {
+        val menu = navigationView.menu
+
+        if (userViewModel.databaseUser.value != null) {
+            menu.findItem(R.id.logout).isVisible = true
+            menu.findItem(R.id.login).isVisible = false
+        } else {
+            menu.findItem(R.id.logout).isVisible = false
+            menu.findItem(R.id.login).isVisible = true
+        }
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         item.isChecked = true;
         drawerLayout.closeDrawers();
@@ -79,7 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 return true
             }
             R.id.login -> {
-                navController.navigate(R.id.loginFragment)
+                navController.navigate(R.id.action_songListFragment_to_loginFragment)
                 return true
             }
             R.id.songList -> {

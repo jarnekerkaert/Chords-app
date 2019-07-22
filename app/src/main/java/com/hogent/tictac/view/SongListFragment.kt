@@ -59,11 +59,18 @@ class SongListFragment : Fragment() {
         refreshLayout.setOnRefreshListener {
             songViewModel.retrieveSongs()
             refreshLayout.isRefreshing = false
+            (song_list.adapter as SongAdapter).reloadData()
         }
 
 
         song_list_create.setOnClickListener {
-            navController.navigate(R.id.action_songListFragment_to_createSongFragment)
+            navController.navigate(R.id.action_songListFragment_to_songChordsFragment)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (song_list.adapter as SongAdapter).reloadData()
     }
 }
