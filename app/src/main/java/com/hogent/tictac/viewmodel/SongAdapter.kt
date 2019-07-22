@@ -3,11 +3,11 @@ package com.hogent.tictac.viewmodel
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
@@ -47,6 +47,7 @@ class SongAdapter(
         val item = songs[position]
         holder.songKey.text = item.key.name
         holder.songTitle.text = item.title
+        holder.songComposer.text = item.user
 
         with(holder.parentLayout) {
             tag = item
@@ -59,7 +60,8 @@ class SongAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val songKey: TextView = view.song_key
         val songTitle: TextView = view.song_title
-        val parentLayout: RelativeLayout = view.parent_layout
+        val songComposer: TextView = view.song_composer
+        val parentLayout: MaterialCardView = view.parent_layout
     }
 
     interface OnSongClickListener {

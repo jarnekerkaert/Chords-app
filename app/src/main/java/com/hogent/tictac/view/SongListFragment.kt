@@ -14,6 +14,7 @@ import com.hogent.tictac.MainActivity
 import com.hogent.tictac.R
 import com.hogent.tictac.viewmodel.SongAdapter
 import com.hogent.tictac.viewmodel.SongViewModel
+import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 
@@ -21,6 +22,7 @@ class SongListFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
     private lateinit var navController: NavController
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -31,6 +33,10 @@ class SongListFragment : Fragment() {
 
         songViewModel = activity?.run {
             ViewModelProviders.of(this).get(SongViewModel::class.java)
+        } ?: throw Exception("Invalid activity")
+
+        userViewModel = activity?.run {
+            ViewModelProviders.of(this).get(UserViewModel::class.java)
         } ?: throw Exception("Invalid activity")
 
         songViewModel.retrieveSongs()
@@ -64,13 +70,15 @@ class SongListFragment : Fragment() {
 
 
         song_list_create.setOnClickListener {
-            navController.navigate(R.id.action_songListFragment_to_songChordsFragment)
+            if (userViewModel.databaseUser.value != null)
+                navController.navigate(R.id.action_songListFragment_to_songChordsFragment)
+            else
+                songViewModel.songToast.value = "You are not logged in"
         }
     }
 
     override fun onResume() {
         super.onResume()
-
         (song_list.adapter as SongAdapter).reloadData()
     }
 }

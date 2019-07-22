@@ -10,10 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chord_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-    </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/play_button"
@@ -23,5 +22,5 @@
             android:src="@drawable/baseline_play_arrow_black_24dp"
             android:layout_margin="16dp"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/colorAccent"/>
+            app:backgroundTint="@color/colorPrimaryLight"/>
 </FrameLayout>

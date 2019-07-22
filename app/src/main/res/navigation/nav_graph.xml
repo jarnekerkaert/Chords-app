@@ -8,7 +8,7 @@
     <fragment
             android:id="@+id/songListFragment"
             android:name="com.hogent.tictac.view.SongListFragment"
-            android:label="Song list">
+            android:label="All songs">
         <action android:id="@+id/action_songListFragment_to_songDetailFragment"
                 app:destination="@id/songDetailFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -23,7 +23,7 @@
     </fragment>
     <fragment android:id="@+id/songChordsFragment"
               android:name="com.hogent.tictac.view.SongChordsFragment"
-              android:label="Pick chords">
+              android:label="Your song">
         <action android:id="@+id/action_songChordsFragment_to_songDetailFragment"
                 app:destination="@id/songDetailFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
@@ -35,7 +35,7 @@
     <fragment
             android:id="@+id/songDetailFragment"
             android:name="com.hogent.tictac.view.SongDetailFragment"
-            android:label="Song detail"/>
+            android:label="Song"/>
     <fragment android:id="@+id/loginFragment" android:name="com.hogent.tictac.view.LoginFragment"
               android:label="Login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/action_loginFragment_to_songListFragment" app:destination="@id/songListFragment"

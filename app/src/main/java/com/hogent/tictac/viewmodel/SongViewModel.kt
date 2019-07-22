@@ -58,7 +58,7 @@ class SongViewModel : InjectedViewModel() {
                     songToast.value = "Song saved as ${result.title}!"
                 },
                 { error ->
-                    songToast.value = "Failed to save song" + error.message
+                    songToast.value = "Failed to save song " + error.message
                 }
             )
     }

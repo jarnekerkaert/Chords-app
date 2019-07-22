@@ -11,6 +11,7 @@ object Model {
             @TypeConverters(Converters::class)
             var key: Note,
             var title: String,
+            var user: String,
             @TypeConverters(Converters::class)
             var chords: MutableList<Note> = arrayListOf(),
             @PrimaryKey var id: String
