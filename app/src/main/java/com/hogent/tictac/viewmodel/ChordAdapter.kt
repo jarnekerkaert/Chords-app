@@ -11,6 +11,18 @@ import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
 import java.util.*
 
+/**
+ * RecyclerViewAdapter for displaying a list of chords
+ *
+ * @param lifecycleOwner
+ * @param songViewModel
+ * @param scaleOfSongKey decides if the adapter uses the chords from the key of the selected song in songViewModel
+ * @param mListener for defining the onChordClickListener in the fragment
+ *
+ * @property chords list of chords in the recyclerView
+ *
+ * @constructor observes the selected song in the songViewModel and updates the chords in the recyclerView when the data set changes
+ */
 class ChordAdapter(
     lifecycleOwner: LifecycleOwner,
     songViewModel: SongViewModel,
@@ -65,6 +77,12 @@ class ChordAdapter(
         fun onChordClick(item: String)
     }
 
+    /**
+     * Used for generating chords of a given key
+     *
+     * @param key the given key
+     * @return every chord in the given key
+     */
     private fun scaleOfKey(key: String): List<String> {
         val chords = Model.NoteMajor.values().map { c -> c.name }
         Collections.rotate(chords, -(Model.NoteMajor.valueOf(key).ordinal))

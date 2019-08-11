@@ -12,6 +12,17 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.Credentials
 import javax.inject.Inject
 
+/**
+ *  ViewModel for users
+ *
+ *  Used for handling the current user
+ *
+ *  @property currentUser the currently logged in user
+ *  @property databaseUser the user currently saved in the room database
+ *  @property userToast LiveData variable used to display toast messages, is observed in MainActivity
+ *  @property userRepository repository used for managing the user in the local room database
+ *  @property userApiService service used for registration, logging in and retrieving users
+ */
 class UserViewModel : InjectedViewModel() {
 
     var currentUser = MutableLiveData<Model.User>()
@@ -29,6 +40,11 @@ class UserViewModel : InjectedViewModel() {
     @Inject
     lateinit var context: Context
 
+    /**
+     * Logs the user in a username and a password
+     *
+     * @param loginDetails the username and password to use
+     */
     fun login(loginDetails: Model.Login) {
         val credentials = Credentials.basic(loginDetails.name, loginDetails.password)
         subscription = userApiService.login(credentials)
@@ -46,6 +62,11 @@ class UserViewModel : InjectedViewModel() {
             )
     }
 
+    /**
+     * Registers a user using a username and a password
+     *
+     * @param registerDetails the username and password to use
+     */
     fun register(registerDetails: Model.Register) {
         val credentials = Credentials.basic(registerDetails.name, registerDetails.password)
         subscription = userApiService.register(registerDetails)
@@ -68,6 +89,11 @@ class UserViewModel : InjectedViewModel() {
         preferences.edit().putString("token", token).apply()
     }
 
+    /**
+     * Updates current user data
+     *
+     * @param user the new user
+     */
     private fun onRetrieve(user: Model.User) {
         currentUser.value = user
         userRepository.insert(user)
