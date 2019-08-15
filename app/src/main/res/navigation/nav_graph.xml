@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
-        app:startDestination="@id/loginFragment">
+        app:startDestination="@id/songListFragment">
 
     <fragment
             android:id="@+id/songListFragment"
@@ -12,7 +12,14 @@
         <action android:id="@+id/action_songListFragment_to_songDetailFragment"
                 app:destination="@id/songDetailFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:popUpTo="@+id/songListFragment"/>
+        <action android:id="@+id/action_songListFragment_to_loginFragment" app:destination="@id/loginFragment"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_songListFragment_to_songChordsFragment"
+                app:destination="@id/songChordsFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" app:popUpTo="@+id/songListFragment"/>
     </fragment>
     <fragment android:id="@+id/songChordsFragment"
               android:name="com.hogent.tictac.view.SongChordsFragment"
