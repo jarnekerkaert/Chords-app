@@ -29,6 +29,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    /**
+     * Initializes viewmodels, layout views and observes globally used variables
+     *
+     * Initializes:
+     * - userViewModel for user data
+     * - songViewModel for songs data
+     * - toolbar and back/home button
+     * - navcontroller for global navigation
+     *
+     * Finally observes the current user and toasts from viewmodels, displays them when the values change
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -107,6 +118,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onOptionsItemSelected(item)
     }
 
+    /**
+     * Logs the user out
+     *
+     * Clears the room database of all users,
+     * clears the user token in shared preferences and navigates to the homepage
+     */
     private fun logout() {
         userViewModel.userRepository.nukeUsers()
         getSharedPreferences("user", Context.MODE_PRIVATE)

@@ -17,11 +17,22 @@ import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.mindrot.jbcrypt.BCrypt
 
+/**
+ * Fragment for registration screen
+ *
+ * Provides registration form
+ *
+ * @property userViewModel viewModel for getting user data
+ * @property navController navigation controller for navigating to other fragments
+ */
 class RegisterFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var navController: NavController
 
+    /**
+     * Initializes viewModel, navigation controller and adjusts menu accordingly
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         userViewModel = activity?.run {
             ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -36,6 +47,12 @@ class RegisterFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
+    /**
+     * Called when view is created
+     *
+     * Sets listener for register button. When clicked it checks if username and password are present and tries to log in.
+     * If the validation fails, the invalid form element is focused on.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
