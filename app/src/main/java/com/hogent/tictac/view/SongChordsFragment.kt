@@ -35,7 +35,7 @@ import java.util.*
  * @property userViewModel viewModel for getting user data
  * @property songViewModel viewModel for setting created song data
  * @property navController navigation controller for navigating to other fragments
- * @property mediaPlayer
+ * @property mediaPlayer for playing chords when clicked
  */
 class SongChordsFragment : Fragment() {
 
@@ -45,7 +45,7 @@ class SongChordsFragment : Fragment() {
     private lateinit var navController: NavController
 
     /**
-     *
+     * Initializes viewmodels, mediaplayer and navigation controller. Also adjusts actionbar accordingly
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +72,9 @@ class SongChordsFragment : Fragment() {
         return view
     }
 
+    /**
+     *
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -112,10 +115,10 @@ class SongChordsFragment : Fragment() {
         }
 
         song_chords_save.setOnClickListener {
-            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
+            val saveView = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
             AlertDialog.Builder(activity as MainActivity)
                 .setTitle("Give it a name")
-                .setView(view)
+                .setView(saveView)
                 .setPositiveButton(
                     "Create"
                 ) { _, _ ->
