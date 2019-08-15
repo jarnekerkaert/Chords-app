@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.hogent.tictac.MainActivity
 import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
@@ -48,9 +51,9 @@ class SongChordsFragment : Fragment() {
      * Initializes viewmodels, mediaplayer and navigation controller. Also adjusts actionbar accordingly
      */
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_song_chords, container, false)
 
@@ -79,58 +82,79 @@ class SongChordsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         songViewModel.songSelected.value = Model.Song(
-            Model.Note.C,
-            "",
-            mutableListOf(),
-            UUID.randomUUID().toString()
+                Model.Note.C,
+                "",
+                userViewModel.currentUser.value?.name ?: "unknown",
+                mutableListOf(),
+                UUID.randomUUID().toString()
         )
 
         all_chords_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             adapter = ChordAdapter(
-                viewLifecycleOwner, songViewModel, true,
-                object : ChordAdapter.OnChordClickListener {
-                    override fun onChordClick(item: String) {
-                        songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
+                    viewLifecycleOwner, songViewModel, true,
+                    object : ChordAdapter.OnChordClickListener {
+                        override fun onChordClick(item: String) {
+                            songViewModel.songSelected.value?.chords?.add(Model.Note.valueOf(item))
 
-                        (chord_list.adapter as ChordAdapter).reloadData()
+                            (chord_list.adapter as ChordAdapter).reloadData()
 
-                        playChord(item)
+                            playChord(item)
 
-                        Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                            Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
+                        }
+                    }, R.color.colorAccent)
         }
 
         chord_list.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(this)
             adapter = ChordAdapter(
-                viewLifecycleOwner, songViewModel, false,
-                object : ChordAdapter.OnChordClickListener {
-                    override fun onChordClick(item: String) {
-                        playChord(item)
-                    }
-                }
+                    viewLifecycleOwner, songViewModel, false,
+                    object : ChordAdapter.OnChordClickListener {
+                        override fun onChordClick(item: String) {
+                            playChord(item)
+                        }
+                    }, R.color.colorPrimaryDark
             )
+        }
+
+
+        song_choose_key.setOnClickListener {
+            val keyPicker = NumberPicker(activity)
+            keyPicker.displayedValues = Model.Note.values().map { n -> n.name }.toTypedArray()
+            keyPicker.minValue = 0
+            keyPicker.maxValue = Model.Note.values().size - 1
+            keyPicker.value = songViewModel.songSelected.value?.key?.ordinal ?: 0
+            AlertDialog.Builder(activity as MainActivity)
+                    .setTitle("Pick a key")
+                    .setView(keyPicker)
+                    .setPositiveButton(
+                            "Save"
+                    ) { _, _ ->
+                        songViewModel.songSelected.value?.key = Model.Note.values()[keyPicker.value]
+                        (all_chords_list.adapter as ChordAdapter).reloadData()
+                    }.show()
         }
 
         song_chords_save.setOnClickListener {
             val saveView = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
             AlertDialog.Builder(activity as MainActivity)
-                .setTitle("Give it a name")
-                .setView(saveView)
-                .setPositiveButton(
-                    "Create"
-                ) { _, _ ->
-                    songViewModel.songSelected.value?.title = view.song_name.text.toString()
-                    songViewModel.saveSong(userViewModel.databaseUser.value!!.id)
-                    navController.navigate(R.id.action_songChordsFragment_to_songDetailFragment)
-                }
-                .setNegativeButton(
-                    "Cancel"
-                ) { dialog, _ ->
-                    dialog!!.cancel()
-                }.show()
+                    .setTitle("Give it a name")
+                    .setView(saveView)
+                    .setPositiveButton(
+                            "Create"
+                    ) { _, _ ->
+                        songViewModel.songSelected.value?.title = view.song_name.text.toString()
+                        songViewModel.saveSong(userViewModel.databaseUser.value!!.id)
+                        navController.navigate(R.id.action_songChordsFragment_to_songDetailFragment)
+                    }
+                    .setNegativeButton(
+                            "Cancel"
+                    ) { dialog, _ ->
+                        dialog!!.cancel()
+                    }.show()
         }
     }
 

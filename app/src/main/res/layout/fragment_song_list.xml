@@ -26,5 +26,5 @@
             android:src="@drawable/baseline_add_black_18dp"
             android:layout_margin="16dp"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/colorAccent"/>
+            app:backgroundTint="@color/colorPrimary"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

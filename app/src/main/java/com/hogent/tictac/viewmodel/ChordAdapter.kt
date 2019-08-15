@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
+import kotlinx.android.synthetic.main.chord_list_item.view.*
+import org.jetbrains.anko.backgroundColor
 import java.util.*
 
 /**
@@ -24,10 +26,11 @@ import java.util.*
  * @constructor observes the selected song in the songViewModel and updates the chords in the recyclerView when the data set changes
  */
 class ChordAdapter(
-    private var lifecycleOwner: LifecycleOwner,
-    private var songViewModel: SongViewModel,
-    private val scaleOfSongKey: Boolean,
-    private val mListener: OnChordClickListener
+        private var lifecycleOwner: LifecycleOwner,
+        private var songViewModel: SongViewModel,
+        private val scaleOfSongKey: Boolean,
+        private val mListener: OnChordClickListener,
+        private val chordColor: Int?
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
 
     private var chords: List<String> = listOf()
@@ -54,7 +57,7 @@ class ChordAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chord_list_item, parent, false)
-
+        view.chord.backgroundColor = chordColor ?: R.color.colorAccent
         return ViewHolder(view)
     }
 
@@ -87,15 +90,26 @@ class ChordAdapter(
      */
     private fun scaleOfKey(key: String): List<String> {
         val chords = Model.NoteMajor.values().map { c -> c.name }
-        Collections.rotate(chords, -(Model.NoteMajor.valueOf(key).ordinal))
-        return listOf(
-            chords[0],
-            "${chords[2]}M",
-            "${chords[4]}M",
-            chords[5],
-            chords[7],
-            "${chords[9]}M",
-            "${chords[11]}M"
-        )
+        Collections.rotate(chords, -(Model.NoteMajor.valueOf(key.replace("M", "")).ordinal))
+        if (key.contains("M"))
+            return listOf(
+                    "${chords[0]}M",
+                    chords[2],
+                    chords[4],
+                    "${chords[5]}M",
+                    "${chords[7]}M",
+                    chords[9],
+                    chords[11]
+            )
+        else
+            return listOf(
+                    chords[0],
+                    "${chords[2]}M",
+                    "${chords[4]}M",
+                    chords[5],
+                    chords[7],
+                    "${chords[9]}M",
+                    "${chords[11]}M"
+            )
     }
 }

@@ -61,7 +61,7 @@ class SongDetailFragment : Fragment() {
                     override fun onChordClick(item: String) {
                         playChord(item)
                     }
-                })
+                }, R.color.colorPrimaryDark)
         }
 
         play_button.setOnClickListener {

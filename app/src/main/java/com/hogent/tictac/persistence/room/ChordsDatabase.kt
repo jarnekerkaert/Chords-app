@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.hogent.tictac.persistence.Converters
 import com.hogent.tictac.persistence.Model
 
-@Database(entities = [Model.Song::class, Model.User::class], version = 5)
+@Database(entities = [Model.Song::class, Model.User::class], version = 6)
 @TypeConverters(Converters::class)
 abstract class ChordsDatabase : RoomDatabase() {
 

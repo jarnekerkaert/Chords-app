@@ -1,7 +1,6 @@
 package com.hogent.tictac.persistence.network
 
 import android.content.Context
-import android.util.Log
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
@@ -30,7 +29,6 @@ class NetworkModule {
         val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY
         }
-        Log.i("AUTH_TOKEN", authToken)
         val client: OkHttpClient = OkHttpClient.Builder().apply {
             if (authToken != "none")
                 addInterceptor(BasicAuthInterceptor(authToken))
