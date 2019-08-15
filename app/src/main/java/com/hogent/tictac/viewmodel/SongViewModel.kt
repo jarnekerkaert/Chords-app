@@ -45,7 +45,7 @@ class SongViewModel : InjectedViewModel() {
                 { result ->
                     songs.postValue(result)
                 },
-                { error ->
+                {
                     songToast.value = "Error retrieving songs"
                 }
             )
@@ -63,7 +63,7 @@ class SongViewModel : InjectedViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { result -> songSelected.value = result },
-                { error -> songToast.value = "Song not found" }
+                { songToast.value = "Song not found" }
             )
     }
 
@@ -81,7 +81,7 @@ class SongViewModel : InjectedViewModel() {
                 { result ->
                     songToast.value = "Song saved as ${result.title}!"
                 },
-                { error ->
+                {
                     songToast.value = "Failed to save song"
                 }
             )

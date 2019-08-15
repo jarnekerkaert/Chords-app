@@ -18,12 +18,22 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.mindrot.jbcrypt.BCrypt
 
-
+/**
+ * Fragment for login screen
+ *
+ * Provides login form
+ *
+ * @property userViewModel viewModel for getting user data
+ * @property navController navigation controller for navigating to other fragments
+ */
 class LoginFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var navController: NavController
 
+    /**
+     * Initializes viewModel, navigation controller and adjusts menu accordingly
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +51,14 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    /**
+     * Called when view is created
+     *
+     * Sets listener for login button. When clicked it checks if username and password are present and tries to log in.
+     * If the validation fails, the invalid form element is focused on.
+     *
+     * Also sets functionality for the register button. When clicked the navigation controller tries to navigate to the registerFragment
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -20,7 +20,20 @@ import com.hogent.tictac.viewmodel.SongViewModel
 import com.hogent.tictac.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_song_chords.*
 
-
+/**
+ * Fragment for creating a song
+ *
+ * Uses two recycler views:
+ * - chords to choose from
+ * - chosen chords
+ *
+ *
+ *
+ * @property userViewModel viewModel for getting user data
+ * @property songViewModel viewModel for setting created song data
+ * @property navController navigation controller for navigating to other fragments
+ * @property mediaPlayer
+ */
 class SongChordsFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
@@ -28,6 +41,9 @@ class SongChordsFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var mediaPlayer: MediaPlayer
 
+    /**
+     *
+     */
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,

@@ -56,7 +56,7 @@ class UserViewModel : InjectedViewModel() {
                     setToken(credentials)
                     userToast.value = "Login successful!"
                 },
-                { error ->
+                {
                     userToast.value = "Given user/password doesn't exist"
                 }
             )
@@ -78,7 +78,7 @@ class UserViewModel : InjectedViewModel() {
                     setToken(credentials)
                     userToast.value = "Registration successful!"
                 },
-                { error ->
+                {
                     userToast.value = "Registration failed."
                 }
             )

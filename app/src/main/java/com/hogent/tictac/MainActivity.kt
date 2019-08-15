@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
      * - toolbar and back/home button
      * - navcontroller for global navigation
      *
-     * Finally observes the current user and toasts from viewmodels
+     * Finally observes the current user and toasts from viewmodels, displays them when the values change
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
