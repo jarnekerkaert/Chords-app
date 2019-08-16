@@ -12,6 +12,17 @@ import com.hogent.tictac.R
 import com.hogent.tictac.persistence.Model
 import kotlinx.android.synthetic.main.fragment_song.view.*
 
+/**
+ * RecyclerViewAdapter for displaying a list of songs
+ *
+ * @param lifecycleOwner
+ * @param songViewModel
+ * @param mListener for defining the onSongClickListener in the fragment
+ *
+ * @property songs list of songs in the recyclerView
+ *
+ * @constructor observes the songs in the songViewModel and updates the songs in the recyclerView when the data set changes
+ */
 class SongAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val songViewModel: SongViewModel,

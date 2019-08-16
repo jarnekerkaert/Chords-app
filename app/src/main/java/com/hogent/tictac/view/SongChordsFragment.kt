@@ -26,7 +26,20 @@ import kotlinx.android.synthetic.main.dialog_song_create.view.*
 import kotlinx.android.synthetic.main.fragment_song_chords.*
 import java.util.*
 
-
+/**
+ * Fragment for creating a song
+ *
+ * Uses two recycler views:
+ * - chords to choose from
+ * - chosen chords
+ *
+ *
+ *
+ * @property userViewModel viewModel for getting user data
+ * @property songViewModel viewModel for setting created song data
+ * @property navController navigation controller for navigating to other fragments
+ * @property mediaPlayer for playing chords when clicked
+ */
 class SongChordsFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
@@ -34,6 +47,9 @@ class SongChordsFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
     private lateinit var navController: NavController
 
+    /**
+     * Initializes viewmodels, mediaplayer and navigation controller. Also adjusts actionbar accordingly
+     */
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -59,6 +75,9 @@ class SongChordsFragment : Fragment() {
         return view
     }
 
+    /**
+     *
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -120,10 +139,10 @@ class SongChordsFragment : Fragment() {
         }
 
         song_chords_save.setOnClickListener {
-            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
+            val saveView = LayoutInflater.from(activity).inflate(R.layout.dialog_song_create, null)
             AlertDialog.Builder(activity as MainActivity)
                     .setTitle("Give it a name")
-                    .setView(view)
+                    .setView(saveView)
                     .setPositiveButton(
                             "Create"
                     ) { _, _ ->
