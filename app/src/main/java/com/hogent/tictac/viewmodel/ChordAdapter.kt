@@ -45,7 +45,7 @@ class ChordAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.chord_list_item, parent, false)
-        view.chord.backgroundColor = chordColor ?: R.color.colorAccent
+        view.chord.backgroundColor =
         return ViewHolder(view)
     }
 

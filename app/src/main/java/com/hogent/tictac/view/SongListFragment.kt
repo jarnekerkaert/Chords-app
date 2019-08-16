@@ -74,6 +74,7 @@ class SongListFragment : Fragment() {
                 navController.navigate(R.id.action_songListFragment_to_songChordsFragment)
             else
                 songViewModel.songToast.value = "You are not logged in"
+//            navController.navigate(R.id.action_songListFragment_to_songChordsFragment)
         }
     }
 
