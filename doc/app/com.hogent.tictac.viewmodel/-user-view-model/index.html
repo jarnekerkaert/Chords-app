@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UserViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.hogent.tictac.viewmodel</a>&nbsp;/&nbsp;<a href="./index.html">UserViewModel</a><br/>
+<br/>
+<h1>UserViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">UserViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-injected-view-model/index.html"><span class="identifier">InjectedViewModel</span></a></code>
+<p>ViewModel for users</p>
+<p>Used for handling the current user</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">UserViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>ViewModel for users</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="context.html">context</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">context</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="current-user.html">currentUser</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">currentUser</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.hogent.tictac.persistence/-model/-user/index.html"><span class="identifier">Model.User</span></a><span class="symbol">&gt;</span></code>
+<p>the currently logged in user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="database-user.html">databaseUser</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">databaseUser</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../com.hogent.tictac.persistence/-model/-user/index.html"><span class="identifier">Model.User</span></a><span class="symbol">&gt;</span></code>
+<p>the user currently saved in the room database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-api-service.html">userApiService</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">userApiService</span><span class="symbol">: </span><a href="../../com.hogent.tictac.persistence.network/-user-api-service/index.html"><span class="identifier">UserApiService</span></a></code>
+<p>service used for registration, logging in and retrieving users</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-repository.html">userRepository</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">userRepository</span><span class="symbol">: </span><a href="../../com.hogent.tictac.persistence.room/-user-repository/index.html"><span class="identifier">UserRepository</span></a></code>
+<p>repository used for managing the user in the local room database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-toast.html">userToast</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">userToast</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code>
+<p>LiveData variable used to display toast messages, is observed in MainActivity</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="login.html">login</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">login</span><span class="symbol">(</span><span class="identifier" id="com.hogent.tictac.viewmodel.UserViewModel$login(com.hogent.tictac.persistence.Model.Login)/loginDetails">loginDetails</span><span class="symbol">:</span>&nbsp;<a href="../../com.hogent.tictac.persistence/-model/-login/index.html"><span class="identifier">Model.Login</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Logs the user in a username and a password</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="register.html">register</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">register</span><span class="symbol">(</span><span class="identifier" id="com.hogent.tictac.viewmodel.UserViewModel$register(com.hogent.tictac.persistence.Model.Register)/registerDetails">registerDetails</span><span class="symbol">:</span>&nbsp;<a href="../../com.hogent.tictac.persistence/-model/-register/index.html"><span class="identifier">Model.Register</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Registers a user using a username and a password</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

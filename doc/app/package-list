@@ -1,0 +1,9 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.hogent.tictac
+com.hogent.tictac.persistence
+com.hogent.tictac.persistence.network
+com.hogent.tictac.persistence.room
+com.hogent.tictac.view
+com.hogent.tictac.viewmodel

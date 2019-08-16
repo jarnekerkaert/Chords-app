@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SongChordsFragment.onViewCreated - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.hogent.tictac.view</a>&nbsp;/&nbsp;<a href="index.html">SongChordsFragment</a>&nbsp;/&nbsp;<a href="./on-view-created.html">onViewCreated</a><br/>
+<br/>
+<h1>onViewCreated</h1>
+<a name="com.hogent.tictac.view.SongChordsFragment$onViewCreated(android.view.View, android.os.Bundle)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onViewCreated</span><span class="symbol">(</span><span class="identifier" id="com.hogent.tictac.view.SongChordsFragment$onViewCreated(android.view.View, android.os.Bundle)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.hogent.tictac.view.SongChordsFragment$onViewCreated(android.view.View, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initialization of the recycler views and floating action buttons.</p>
+<p>Creates a default song with the default key of C
+When the adapters are attached to the recycler views, the onclicklisteners are also initialized.</p>
+<p>When a chord in all_chords_list is clicked, the chord is added to the selected song in songViewModel,
+The chords in the adapter are reloaded, the chord is played and finally a toast message showing the clicked chord
+is displayed.</p>
+<p>When a chord in chords_list is clicked, only the chord is played.</p>
+<p>When the key selection button is clicked, a custom number picker is created with all major and minor chords. When
+the save button is clicked, the key in the selected song in songViewModel is set to the selected chord, and the
+chords in all_chords_list are reloaded.</p>
+<p>When the save song button is clicked, a form dialog is shown where the user is asked to fill in a title. When saved,
+the title is set, the song is saved to the database and the navigation controller tries to navigate to the home screen.</p>
+</BODY>
+</HTML>

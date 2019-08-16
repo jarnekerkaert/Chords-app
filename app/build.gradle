@@ -27,7 +27,9 @@ android {
     }
     allprojects {
         repositories {
-            google()
+            maven {
+                url 'https://maven.google.com'
+            }
             jcenter()
         }
     }
@@ -41,9 +43,8 @@ android {
 dependencies {
     // VERSION DEFINITIONS
     def room_version = "2.1.0"
-    def dagger_version = "2.23.1"
+    def dagger_version = "2.16"
     def retrofit_version = "2.4.0"
-    def okhttp_version = "4.0.0-RC1"
     def anko_version = "0.10.7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

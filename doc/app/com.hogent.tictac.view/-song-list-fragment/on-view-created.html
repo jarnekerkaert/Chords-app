@@ -1,0 +1,20 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SongListFragment.onViewCreated - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.hogent.tictac.view</a>&nbsp;/&nbsp;<a href="index.html">SongListFragment</a>&nbsp;/&nbsp;<a href="./on-view-created.html">onViewCreated</a><br/>
+<br/>
+<h1>onViewCreated</h1>
+<a name="com.hogent.tictac.view.SongListFragment$onViewCreated(android.view.View, android.os.Bundle)"></a>
+<code><span class="keyword">fun </span><span class="identifier">onViewCreated</span><span class="symbol">(</span><span class="identifier" id="com.hogent.tictac.view.SongListFragment$onViewCreated(android.view.View, android.os.Bundle)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.hogent.tictac.view.SongListFragment$onViewCreated(android.view.View, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initialization of recycler view, refresh listener and create song button.</p>
+<p>When a song in the recycler view is clicked, the song is set in songViewModel and the navigation controller tries
+to navigate to songDetailFragment.</p>
+<p>When the refresh action is activated (swipe down), the data in the recycler view is reloaded.</p>
+<p>When the create song button is clicked, check if a user is logged in. If true, navigation controller will navigate
+to songChordsFragment, otherwise a toast message is displayed.</p>
+</BODY>
+</HTML>
