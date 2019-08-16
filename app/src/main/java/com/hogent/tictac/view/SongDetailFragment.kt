@@ -22,13 +22,25 @@ import kotlinx.android.synthetic.main.fragment_song_chords.chord_list
 import kotlinx.android.synthetic.main.fragment_song_detail.*
 import java.io.IOException
 
-
+/**
+ * Fragment for displaying a song
+ *
+ * Uses a recycler view to display the chords, uses mediaPlayer to play the chords in order.
+ *
+ * @property songViewModel viewModel for setting created song data
+ * @property navController navigation controller for navigating to other fragments
+ * @property mediaPlayer for playing chords when clicked
+ */
 class SongDetailFragment : Fragment() {
 
     private lateinit var songViewModel: SongViewModel
     private lateinit var navController: NavController
     private lateinit var mediaPlayer: MediaPlayer
 
+    /**
+     * Initializes songViewModel, media player and navigation controller.
+     * Observes the selected song to adjust actionbar title accordingly
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +62,14 @@ class SongDetailFragment : Fragment() {
         return view
     }
 
+    /**
+     * Initializes the recycler view and the play button
+     *
+     * When a chord in the recycler view is clicked, the chord is played.
+     *
+     * When the play button is clicked, every chord in the selected song is first loaded, then an onCompletionListener is
+     * initialized for the media player. When the first chord is done playing, the next is played until there are none left.
+     */
     @SuppressLint("ShowToast")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +81,7 @@ class SongDetailFragment : Fragment() {
                     override fun onChordClick(item: String) {
                         playChord(item)
                     }
-                }, R.color.colorPrimaryDark)
+                })
         }
 
         play_button.setOnClickListener {
@@ -73,7 +93,7 @@ class SongDetailFragment : Fragment() {
                 }
                 mediaPlayer = MediaPlayer.create(activity, chordIds[count])
                 mediaPlayer.setOnCompletionListener { mp ->
-                    run {
+                        run {
                         count++
                         if (count < chordIds.size) {
                             try {
@@ -106,6 +126,13 @@ class SongDetailFragment : Fragment() {
         }
     }
 
+    /**
+     * Plays the given chord using mediaPlayer
+     *
+     * Looks up the chord file and try to play it. If the mediaPlayer is currently playing a chord then cancel it.
+     *
+     * @param item the given chord
+     */
     private fun playChord(item: String) {
         val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
         if (chordId != 0) {

@@ -33,8 +33,6 @@ import java.util.*
  * - chords to choose from
  * - chosen chords
  *
- *
- *
  * @property userViewModel viewModel for getting user data
  * @property songViewModel viewModel for setting created song data
  * @property navController navigation controller for navigating to other fragments
@@ -76,7 +74,23 @@ class SongChordsFragment : Fragment() {
     }
 
     /**
+     * Initialization of the recycler views and floating action buttons.
      *
+     * Creates a default song with the default key of C
+     * When the adapters are attached to the recycler views, the onclicklisteners are also initialized.
+     *
+     * When a chord in all_chords_list is clicked, the chord is added to the selected song in songViewModel,
+     * The chords in the adapter are reloaded, the chord is played and finally a toast message showing the clicked chord
+     * is displayed.
+     *
+     * When a chord in chords_list is clicked, only the chord is played.
+     *
+     * When the key selection button is clicked, a custom number picker is created with all major and minor chords. When
+     * the save button is clicked, the key in the selected song in songViewModel is set to the selected chord, and the
+     * chords in all_chords_list are reloaded.
+     *
+     * When the save song button is clicked, a form dialog is shown where the user is asked to fill in a title. When saved,
+     * the title is set, the song is saved to the database and the navigation controller tries to navigate to the home screen.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,7 +117,7 @@ class SongChordsFragment : Fragment() {
 
                             Toast.makeText(activity, "Added $item to song", Toast.LENGTH_SHORT).show()
                         }
-                    }, R.color.colorAccent)
+                    })
         }
 
         chord_list.apply {
@@ -116,10 +130,9 @@ class SongChordsFragment : Fragment() {
                         override fun onChordClick(item: String) {
                             playChord(item)
                         }
-                    }, R.color.colorPrimaryDark
+                    }
             )
         }
-
 
         song_choose_key.setOnClickListener {
             val keyPicker = NumberPicker(activity)
@@ -158,6 +171,13 @@ class SongChordsFragment : Fragment() {
         }
     }
 
+    /**
+     * Plays the given chord using mediaPlayer
+     *
+     * Looks up the chord file and try to play it. If the mediaPlayer is currently playing a chord then cancel it.
+     *
+     * @param item the given chord
+     */
     private fun playChord(item: String) {
         val chordId = resources.getIdentifier(item.toLowerCase(), "raw", activity!!.packageName)
         if (chordId != 0) {

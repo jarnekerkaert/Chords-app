@@ -24,14 +24,13 @@ import java.util.*
  *
  * @property chords list of chords in the recyclerView
  *
- * @constructor observes the selected song in the songViewModel and updates the chords in the recyclerView when the data set changes
+ * @constructor calls reloadData and sets the onclicklistener for the individual chords
  */
 class ChordAdapter(
     private var lifecycleOwner: LifecycleOwner,
     private var songViewModel: SongViewModel,
     private val scaleOfSongKey: Boolean,
-    private val mListener: OnChordClickListener,
-    private val chordColor: Int?
+    private val mListener: OnChordClickListener
 ) : RecyclerView.Adapter<ChordAdapter.ViewHolder>() {
 
     private var chords: List<String> = listOf()
@@ -46,6 +45,12 @@ class ChordAdapter(
         }
     }
 
+    /**
+     * Reloads the chords shown in the recyclerview
+     *
+     * Used for refreshing the data from inside a fragment.
+     * Observes the selected song in the songViewModel and updates the chords in the recyclerView when the data set changes
+     */
     fun reloadData() {
         songViewModel.songSelected.observe(lifecycleOwner, Observer {
             chords = if (scaleOfSongKey)
@@ -79,6 +84,11 @@ class ChordAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val chord: TextView = view.findViewById(R.id.chord)
 
+        /**
+         * Sets the background colour of the chord
+         *
+         * Uses the hash encoded chord to generate rgb values
+         */
         fun setColor() {
             val hash = chord.text.hashCode()
             chord.backgroundColor = Color.rgb(
@@ -96,9 +106,14 @@ class ChordAdapter(
     /**
      * Used for generating chords of a given key
      *
+     * An array with all existing chords is initialized, the array is shifted left so that the given chord is placed
+     * first in the array.
+     * If the given chord is a minor, the first, fourth and fifth chords are set to minor chords respectively.
+     * If the given chord is a major, the second, third, sixth and seventh chords are set to minor chords respectively.
+     *
      * @param key the given key
-     * @return every chord in the given key
-     */
+     * @return all 7 chords in the given key
+    */
     private fun scaleOfKey(key: String): List<String> {
         val chords = Model.NoteMajor.values().map { c -> c.name }
         Collections.rotate(chords, -(Model.NoteMajor.valueOf(key.replace("M", "")).ordinal))
