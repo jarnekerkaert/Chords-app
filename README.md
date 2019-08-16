@@ -17,4 +17,4 @@ You can find it [here](https://github.com/jarnekerkaert/TictakBackend).
 * [GSON](https://github.com/google/gson)
 
 ### Author
-* **Jarne Kerkaert** - [jarnekerkaert](https://github.com/jarnekerkaert)
+* **[Jarne Kerkaert](https://github.com/jarnekerkaert)**
